@@ -2,9 +2,10 @@ import SimpleMDE from 'simplemde';
 import 'simplemde/dist/simplemde.min.css'
 
 export class Editor {
-    constructor(onSave) {
+    constructor(onSave, onChange) {
         this.setNote = this.setNote.bind(this);
         this._copyTextToClipboard = this._copyTextToClipboard.bind(this);
+        this._onChangeHandler = this._onChangeHandler.bind(this);
 
         this.simplemde = new SimpleMDE({ element: document.getElementById('editor') });
         this.titleInput = document.getElementById('note-title-input');
@@ -18,16 +19,14 @@ export class Editor {
         saveButton.addEventListener('click', () => {
             onSave({ title: this.titleInput.value, value: this.simplemde.value() });
         })
+
+        this.titleInput.addEventListener('change', this._onChangeHandler(onChange));
+        this.simplemde.codemirror.on("change", this._onChangeHandler(onChange));
     }
 
     setNote({ title, value }) {
         this.titleInput.value = title
         this.simplemde.value(value);
-    }
-
-    clear() {
-        this.titleInput.value = 'Unnamed note';
-        this.simplemde.value('');
     }
 
     _copyTextToClipboard(text) {
@@ -40,5 +39,11 @@ export class Editor {
         }, function (err) {
             console.error('Async: Could not copy text: ', err);
         });
+    }
+
+    _onChangeHandler(callback) {
+        return () => {
+            callback({ title: this.titleInput.value, value: this.simplemde.value() });
+        }
     }
 }

@@ -1,20 +1,13 @@
-import { NOTES_STORAGE_KEY } from "../../_constants";
+import { NOTES_STORAGE_KEY, NOTES_DRAFT_KEY } from '../../_constants';
+
 export class NotesService {
     createNote({ title, value }) {
         const notes = this._getNotes();
-        const time = Date.now()
-        this._writeNotes([{
-            id: time,
-            createDate: time,
-            updateDate: time,
-            isDeleted: false,
-            title,
-            value,
-        }, ...notes])
+        this._writeNotes([this._createNote({ title, value }), ...notes]);
     }
 
     getNotes() {
-        return this._getNotes();
+        return this._getNotes().filter(n => !n.isDeleted);
     }
 
     getNoteById(id) {
@@ -48,11 +41,48 @@ export class NotesService {
         this._writeNotes(notes);
     }
 
+    getDraftNote() {
+        return this._getDraftNote();
+    }
+
+    updateDraftNote(note) {
+        this._writeDraftNote(note);
+    }
+
+    removeDraftNote() {
+        this._writeDraftNote(null);
+    }
+
+    _createNote({ title, value }) {
+        const time = Date.now()
+        return {
+            id: time,
+            createDate: time,
+            updateDate: time,
+            isDeleted: false,
+            title,
+            value,
+        }
+    }
+
     _getNotes() {
-        return (JSON.parse(localStorage.getItem(NOTES_STORAGE_KEY)) || []).filter(n => !n.isDeleted);
+        return (this._getLocalStorageItem(NOTES_STORAGE_KEY) || []);
+    }
+
+    _getDraftNote() {
+        return this._getLocalStorageItem(NOTES_DRAFT_KEY);
     }
 
     _writeNotes(notes) {
         localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(notes));
+    }
+
+    _writeDraftNote(note) {
+        localStorage.setItem(NOTES_DRAFT_KEY, JSON.stringify(note));
+    }
+
+    _getLocalStorageItem(key) {
+        const item = localStorage.getItem(key);
+        if (item) return JSON.parse(item);
     }
 }

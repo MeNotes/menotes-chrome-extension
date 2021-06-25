@@ -1,4 +1,4 @@
-import { NOTES_STORAGE_KEY } from "../_constants";
+import { NOTES_STORAGE_KEY } from '../_constants';
 
 export class App {
     constructor() {
