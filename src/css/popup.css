@@ -1,0 +1,69 @@
+body {
+  width: 600px;
+  min-height: 300px;
+
+  display: grid;
+  grid-template-columns: auto 30px;
+  grid-gap: 10px;
+
+  padding: 10px;
+}
+
+.button {
+  padding: 5px 10px;
+  background: none;
+  border: 1px solid #95a5a6;
+  border-radius: 3px;
+  color: #2c3e50 !important;
+}
+
+.button > i,
+.button > span {
+  pointer-events: none;
+}
+
+.button:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.button--icon {
+  padding: 0;
+  height: 25px;
+  width: 25px;
+  border: none;
+  border-radius: 100%;
+}
+
+.navigation {
+  display: grid;
+  align-self: start;
+  grid-gap: 10px;
+}
+
+.editor-page__container {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.editor-page__note-title.CodeMirror {
+  min-height: 0;
+}
+
+.editor-page__actions {
+  justify-self: flex-end;
+}
+
+.notes-page__container {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.note-item {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+}
+
+.note-item__actions {
+  display: flex;
+  gap: 10px;
+}

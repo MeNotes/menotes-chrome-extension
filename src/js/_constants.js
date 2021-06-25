@@ -1,0 +1,1 @@
+export const NOTES_STORAGE_KEY = "google-ext-storage-key"

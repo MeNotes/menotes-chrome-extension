@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    <main>
+      <div id="editor-page" class="editor-page">
+        <div class="editor-page__container">
+          <input
+            id="note-title-input"
+            type="text"
+            placeholder="Title..."
+            class="CodeMirror editor-page__note-title"
+          />
+          <div class="editor-page__editor">
+            <textarea id="editor"></textarea>
+          </div>
+
+          <div class="editor-page__actions">
+            <button id="copy-note" class="button">
+              <i class="fa fa-copy"></i>
+              <span>Copy</span>
+            </button>
+            <button id="save-note" class="button">
+              <i class="fa fa-save"></i>
+              <span>Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="notes-page">
+        <div id="notes-js" class="notes-page__container"></div>
+      </div>
+    </main>
+
+    <aside id="navigation" class="navigation">
+      <button data-page-id="editor-page" class="button">
+        <i class="fa fa-plus"></i>
+      </button>
+      <button data-page-id="notes-page" class="button">
+        <i class="fa fa-list"></i>
+      </button>
+    </aside>
+  </body>
+</html>
