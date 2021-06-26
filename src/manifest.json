@@ -4,6 +4,7 @@
   "background": {
     "page": "background.html"
   },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkoHqrzVxWS9xmz3tEgw6unqMHmpUf3fI4QI0TUj4qka6b7wv1UBUKl6K2NLuf4T12rPazTX/iJE4563V9qC6rcD2o3FTKToEFb9cDljj9sxR9mmRqCDOFDl8ivg5KSkX9psHUCJEjGSJ3kEX96c7vLyvl7aRj2YAkQSGvuN/oQIoVudv6Q7V5c85P8QBi+JwiA53/AlpIDY+esxYjI+nkSUjVAAqlQpI9UqZByHw5ZYCq86zl2+eyE5iR7LrgSAh1383/R7yMuDASUQn9EYHK5C5boV8Pqr6emTukyNkC7ljCxoH1zBDz1G0LvtmZcLE6/a3xsrtrJUi9cEXlaURCwIDAQAB",
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
@@ -11,6 +12,19 @@
   "icons": {
     "128": "icon-128.png"
   },
+  "oauth2": {
+    "client_id": "251071516492-3in35m9gu0enanhujhvorbrn7qhnu5lj.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar",
+      "https://www.googleapis.com/auth/calendar.readonly",
+      "https://www.googleapis.com/auth/calendar.events",
+      "https://www.googleapis.com/auth/calendar.events.readonly"
+    ]
+  },
+  "permissions": [
+    "identity",
+    "activeTab"
+  ],
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://apis.google.com/; object-src 'self';"
 }
