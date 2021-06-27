@@ -1,3 +1,5 @@
+import secrets from "secrets";
+import { GoogleEvent } from "../models/GoogleEvent";
 const DISCOVERY_DOCS = [
   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
 ];
@@ -10,20 +12,22 @@ export class GApi {
     return GApi._instance;
   }
 
-  constructor(token) {
+  constructor() {
     if (!gapi || !gapi.client || !gapi.client.init) {
       throw new Error("gapi.client.init is not defined");
     }
 
-    if (!token) {
+    if (!secrets.API_GOOGLE_KEY) {
       throw new Error("API TOKEN is not passed!");
     }
 
     this._inited = false;
-    this._apiToken = token;
+    this._apiToken = secrets.API_GOOGLE_KEY;
   }
 
   init() {
+    if (this._inited) return Promise.resolve();
+
     return gapi.client
       .init({
         apiKey: this._apiToken,
@@ -55,7 +59,7 @@ export class GApi {
         if (!response || !response.result || !response.result.items) {
           throw new Error("Events can not be fetched");
         }
-        return response.result.items;
+        return response.result.items.map((item) => new GoogleEvent(item));
       });
   }
 

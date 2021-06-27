@@ -1,59 +1,64 @@
-import { Page } from './page'
-import { Editor } from '../components/Editor'
+import { Page } from "./page";
+import { Editor } from "../components/Editor";
+import { EventList } from "../components/EventList";
 
 export class EditorPage extends Page {
-    constructor(notesService) {
-        super(EditorPage.id);
+  constructor(notesService) {
+    super(EditorPage.id);
 
-        this.init = this.init.bind(this);
-        this._onSaveClickHandler = this._onSaveClickHandler.bind(this);
-        this._onEditorChangeHandler = this._onEditorChangeHandler.bind(this);
+    this.init = this.init.bind(this);
+    this._onSaveClickHandler = this._onSaveClickHandler.bind(this);
+    this._onEditorChangeHandler = this._onEditorChangeHandler.bind(this);
 
-        this.notesService = notesService;
+    this.notesService = notesService;
 
-        this.note = null;
-        this.editor = new Editor(this._onSaveClickHandler, this._onEditorChangeHandler);
+    this.note = null;
+    this.editor = new Editor(
+      this._onSaveClickHandler,
+      this._onEditorChangeHandler
+    );
+    this.eventList = new EventList();
+  }
+
+  init([id]) {
+    super.init();
+
+    const note = id && this.notesService.getNoteById(id);
+    if (note) {
+      this.note = note;
+      this.notesService.updateDraftNote(note);
     }
 
-    init([id]) {
-        super.init();
-
-        const note = id && this.notesService.getNoteById(id);
-        if (note) {
-            this.note = note;
-            this.notesService.updateDraftNote(note);
-        }
-
-        const draftNote = this.notesService.getDraftNote();
-        if (draftNote && draftNote.id) this.note = draftNote;
-        if (draftNote) {
-            this.editor.setNote(draftNote);
-            return;
-        }
-
-        this.editor.setNote({ title: 'Unnamed note', value: '' });
+    const draftNote = this.notesService.getDraftNote();
+    if (draftNote && draftNote.id) this.note = draftNote;
+    if (draftNote) {
+      this.editor.setNote(draftNote);
+      return;
     }
 
-    _onSaveClickHandler({ title, value }) {
-        this.notesService.removeDraftNote();
+    this.editor.setNote({ value: "" });
+  }
 
-        if (!this.note) {
-            this.notesService.createNote({ title, value });
-            return;
-        }
+  _onSaveClickHandler({ value }) {
+    this.notesService.removeDraftNote();
 
-        this.notesService.updateNote(this.note.id, { title, value });
-        this.note = null;
+    if (!this.note) {
+      this.notesService.createNote({ value });
+      return;
     }
 
-    _onEditorChangeHandler({ title, value }) {
-        if (this.note) {
-            this.notesService.updateDraftNote({ ...this.note, title, value });
-            return;
-        }
+    this.notesService.updateNote(this.note.id, { value });
+    this.note = null;
+  }
 
-        this.notesService.updateDraftNote({ title, value });
+  _onEditorChangeHandler({ value }) {
+    if (this.note) {
+      this.notesService.updateDraftNote({ ...this.note, value });
+      return;
     }
+
+    this.notesService.updateDraftNote({ value });
+  }
 }
 
-EditorPage.id = 'editor-page';
+EditorPage.id = "editor-page";

@@ -1,9 +1,9 @@
 import { NOTES_STORAGE_KEY, NOTES_DRAFT_KEY } from '../../_constants';
 
 export class NotesService {
-    createNote({ title, value }) {
+    createNote({  value }) {
         const notes = this._getNotes();
-        this._writeNotes([this._createNote({ title, value }), ...notes]);
+        this._writeNotes([this._createNote({  value }), ...notes]);
     }
 
     getNotes() {
@@ -15,11 +15,10 @@ export class NotesService {
         return notes.find(n => n.id === id);
     }
 
-    updateNote(id, { title, value }) {
+    updateNote(id, {  value }) {
         const notes = this._getNotes();
         const note = notes.find(n => n.id === id);
 
-        note.title = title;
         note.value = value;
         note.updateDate = Date.now()
 
@@ -53,14 +52,13 @@ export class NotesService {
         this._writeDraftNote(null);
     }
 
-    _createNote({ title, value }) {
+    _createNote({ value }) {
         const time = Date.now()
         return {
             id: time,
             createDate: time,
             updateDate: time,
             isDeleted: false,
-            title,
             value,
         }
     }

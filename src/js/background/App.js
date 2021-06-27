@@ -1,14 +1,28 @@
-import { GApi } from "../shared/services";
-import secrets from "secrets";
+import { MESSAGE_NAMES } from "../shared/constants";
 
 export class App {
-  constructor() {
-    this._gapi = GApi.instance(secrets.API_GOOGLE_KEY);
+  constructor(gApiService) {
+    this._gapi = gApiService;
+
+    this._subscribeOnGetCalendarEvents();
   }
 
-  syncEvents() {
-    this._gapi.getCalendarEvents().then((events) => {
-      console.log(events);
-    });
+  _subscribeOnGetCalendarEvents() {
+    chrome.extension.onMessage.addListener(
+      (message, messageSender, sendResponse) => {
+        const { name } = message || {};
+        if (name === MESSAGE_NAMES.GET_CALENDAR_EVENTS) {
+          this._gapi
+            .getCalendarEvents()
+            .then((events) => {
+              sendResponse({ data: { events } });
+            })
+            .catch((error) => {
+              sendResponse({ error });
+            });
+          return true;
+        }
+      }
+    );
   }
 }

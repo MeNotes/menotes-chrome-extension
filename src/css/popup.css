@@ -67,3 +67,31 @@ body {
   display: flex;
   gap: 10px;
 }
+
+/* Template list */
+.template-list-items {
+  display: none;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 8px 0 8px;
+}
+
+.template-list-item {
+  max-width: 100px;
+  align-self: center;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  color: #000;
+  border: 1px solid #6c757d;
+  border-radius: 7px;
+  background: #fff;
+  padding-right: .6em;
+  padding-left: .6em;
+  cursor: pointer;
+}
+
+.template-list-item:not(:first-child) {
+  margin-left: 10px;
+}
