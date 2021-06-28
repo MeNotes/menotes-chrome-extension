@@ -2,7 +2,7 @@ import SimpleMDE from "simplemde";
 import "simplemde/dist/simplemde.min.css";
 
 export class Editor {
-  constructor(onSave, onChange) {
+  constructor({ onSave, onChange, isToolbarActive, onToolbarActiveChange }) {
     this.setNote = this.setNote.bind(this);
     this._copyTextToClipboard = this._copyTextToClipboard.bind(this);
     this._onChangeHandler = this._onChangeHandler.bind(this);
@@ -11,12 +11,18 @@ export class Editor {
       element: document.getElementById("editor"),
       autofocus: true,
       showIcons: ["code"],
+      hideIcons: ["fullscreen", "side-by-side"],
       status: false,
     });
 
     this.titleInput = document.getElementById("note-title-input");
+    const toolbar = document.querySelector(".editor-toolbar");
+
     const copyButton = document.getElementById("copy-note");
     const saveButton = document.getElementById("save-note");
+    const toolbarToggleButton = document.getElementById(
+      "toggle-toolbar-button"
+    );
 
     copyButton.addEventListener("click", () => {
       this._copyTextToClipboard(this.getEditorValue());
@@ -28,6 +34,17 @@ export class Editor {
 
     this.titleInput.addEventListener("change", this._onChangeHandler(onChange));
     this.simplemde.codemirror.on("change", this._onChangeHandler(onChange));
+
+    if (!isToolbarActive) {
+      toolbarToggleButton.classList.add("inactive");
+      toolbar.classList.add("hidden");
+    }
+
+    toolbarToggleButton.addEventListener("click", () => {
+      toolbarToggleButton.classList.toggle("inactive");
+      toolbar.classList.toggle("hidden");
+      onToolbarActiveChange(!toolbar.classList.contains("hidden"));
+    });
   }
 
   setNote({ title, value }) {

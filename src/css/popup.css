@@ -9,6 +9,10 @@ body {
   padding: 10px;
 }
 
+.hidden {
+  display: none;
+}
+
 .button {
   padding: 5px 10px;
   background: none;
@@ -51,6 +55,34 @@ body {
 
 .editor-page__actions {
   justify-self: flex-end;
+}
+
+.editor {
+  position: relative;
+}
+
+.editor__toolbar-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  padding-top: 5px;
+
+  border: none;
+  background: none;
+  opacity: 0.25;
+}
+
+.editor__toolbar-toggle:hover {
+  opacity: 0.5;
+}
+
+.editor__toolbar-toggle:before {
+  content: "\f205";
+}
+
+.editor__toolbar-toggle.inactive:before {
+  content: "\f204";
 }
 
 .notes-page__container {
