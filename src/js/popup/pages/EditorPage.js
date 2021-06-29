@@ -1,7 +1,7 @@
 import { Page } from "./page";
 import { Editor } from "../components/Editor";
 import { CalendarEventList } from "../components/CalendarEventList";
-import { toggleFullScreen } from "simplemde";
+import { HIDDEN_CLASS_NAME } from "../../shared/constants";
 
 export class EditorPage extends Page {
   constructor(notesService, toolbarService, calendarService) {
@@ -20,16 +20,23 @@ export class EditorPage extends Page {
     this.toolbarService = toolbarService;
     this.calendarService = calendarService;
 
+    const calendarLoadingContainer = document.getElementById(
+      "calendar-event-loader"
+    );
+
     this.note = null;
 
     this.calendarService
       .getCalendarEvents()
       .catch(() => [])
       .then((events) => {
-        this.calendarEventList = new CalendarEventList({
+        new CalendarEventList({
           events,
           onEventClick: this._onClickGoogleEventHandler,
         });
+      })
+      .finally(() => {
+        calendarLoadingContainer.classList.add(HIDDEN_CLASS_NAME);
       });
 
     this.toolbarService.getVisibility().then((visibility) => {

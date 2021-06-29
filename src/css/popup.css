@@ -101,6 +101,10 @@ body {
 }
 
 /* Template list */
+.calendar-event-loader {
+  height: 20px;
+}
+
 .calendar-event-list {
   flex-wrap: nowrap;
   align-items: center;
