@@ -47,6 +47,11 @@ export class NotesPage extends Page {
     this._renderNotesList();
   }
 
+  _getNoteTitle(str = '') {
+    const [title] = str.split("\n");
+    return title;
+  }
+
   _renderNotesList() {
     this.notesContainer.innerHTML = "";
     this.notesService.getNotes().then((notes = []) => {
@@ -55,7 +60,8 @@ export class NotesPage extends Page {
         return;
       }
 
-      notes.forEach(({ id, title }) => {
+      notes.forEach(({ id, value }) => {
+        const title = this._getNoteTitle(value);
         this.notesContainer.innerHTML += `
           <div class="note-item">
               <div class="note-item__title">${title}</div>
