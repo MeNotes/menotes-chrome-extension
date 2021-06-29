@@ -1,6 +1,6 @@
 import { MESSAGE_NAMES } from "../../shared/constants";
 
-export class EventList {
+export class CalendarEventList {
   constructor() {
     this._containerEl = document.getElementById("template-list-items");
     this._getCalendarEvents();

@@ -15,7 +15,6 @@ export class Editor {
       status: false,
     });
 
-    this.titleInput = document.getElementById("note-title-input");
     const toolbar = document.querySelector(".editor-toolbar");
 
     const copyButton = document.getElementById("copy-note");
@@ -29,10 +28,9 @@ export class Editor {
     });
 
     saveButton.addEventListener("click", () => {
-      onSave({ title: this.titleInput.value, value: this.simplemde.value() });
+      onSave({ value: this.simplemde.value() });
     });
 
-    this.titleInput.addEventListener("change", this._onChangeHandler(onChange));
     this.simplemde.codemirror.on("change", this._onChangeHandler(onChange));
 
     if (!isToolbarActive) {
@@ -47,8 +45,7 @@ export class Editor {
     });
   }
 
-  setNote({ title, value }) {
-    this.titleInput.value = title;
+  setNote({ value }) {
     this.simplemde.value(value);
   }
 
@@ -69,7 +66,7 @@ export class Editor {
 
   _onChangeHandler(callback) {
     return () => {
-      callback({ title: this.titleInput.value, value: this.simplemde.value() });
+      callback({ value: this.simplemde.value() });
     };
   }
 }

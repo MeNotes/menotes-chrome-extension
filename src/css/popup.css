@@ -125,5 +125,5 @@ body {
 }
 
 .template-list-item:not(:first-child) {
-  margin-left: 10px;
+  gap: 10px;
 }

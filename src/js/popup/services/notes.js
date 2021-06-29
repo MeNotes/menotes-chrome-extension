@@ -81,7 +81,7 @@ export class NotesService {
     return this._getStorageItem(NOTES_DRAFT_KEY);
   }
 
-  _writeNotes(notes) {
+  _writeNotes(note) {
     return this.storageService.set(NOTES_STORAGE_KEY, note);
   }
 

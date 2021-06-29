@@ -1,6 +1,6 @@
 import { Page } from "./page";
 import { Editor } from "../components/Editor";
-import { EventList } from "../components/EventList";
+import { CalendarEventList } from "../components/CalendarEventList";
 
 export class EditorPage extends Page {
   constructor(notesService, toolbarService) {
@@ -15,7 +15,7 @@ export class EditorPage extends Page {
     this.toolbarService = toolbarService;
 
     this.note = null;
-    this.eventList = new EventList();    
+    this.calendarEventList = new CalendarEventList();
 
     this.toolbarService.getVisibility().then((value) => {
       this.editor = new Editor({
@@ -25,7 +25,6 @@ export class EditorPage extends Page {
         onToolbarActiveChange: this._onToolbarActiveChange,
       });
     });
-
   }
 
   init([id]) {
@@ -46,29 +45,27 @@ export class EditorPage extends Page {
           this.editor.setNote(draftNote);
           return;
         }
-
-        this.editor.setNote({ title: "Unnamed note", value: "" });
       });
   }
 
-  _onSaveClickHandler({ title, value }) {
+  _onSaveClickHandler({ value }) {
     this.notesService.removeDraftNote().then(() => {
       if (!this.note) {
-        this.notesService.createNote({ title, value });
+        this.notesService.createNote({ value });
         return;
       }
 
-      this.notesService.updateNote(this.note.id, { title, value });
+      this.notesService.updateNote(this.note.id, { value });
       this.note = null;
     });
   }
 
-  _onEditorChangeHandler({ title, value }) {
+  _onEditorChangeHandler({ value }) {
     if (this.note) {
-      return this.notesService.updateDraftNote({ ...this.note, title, value });
+      return this.notesService.updateDraftNote({ ...this.note, value });
     }
 
-    return this.notesService.updateDraftNote({ title, value });
+    return this.notesService.updateDraftNote({ value });
   }
 
   _onToolbarActiveChange(value) {
