@@ -17,6 +17,7 @@ export class NotesPage extends Page {
     this.routerService = routerService;
 
     this.notesContainer = document.getElementById("notes-js");
+
     this.notesContainer.addEventListener("click", (e) => {
       const noteId = Number(e.target.dataset.id);
       const action = e.target.dataset.action;
@@ -31,8 +32,9 @@ export class NotesPage extends Page {
           this.routerService.openPage(EditorPage.id, noteId);
           break;
         case REMOVE_ACTION:
-          this.notesService.removeNote(noteId);
-          this._renderNotesList();
+          this.notesService
+            .removeNote(noteId)
+            .then(() => this._renderNotesList());
           break;
         default:
           console.error("Unknown action");
@@ -45,35 +47,29 @@ export class NotesPage extends Page {
     this._renderNotesList();
   }
 
-  _getTitle(str = '') {
-    const [title] = str.split("\n");
-    return title;
-  }
-
   _renderNotesList() {
     this.notesContainer.innerHTML = "";
-    const notes = this.notesService.getNotes() || [];
+    this.notesService.getNotes().then((notes = []) => {
+      if (!notes.length) {
+        this.notesContainer.innerHTML += "No items found.";
+        return;
+      }
 
-    if (!notes.length) {
-      this.notesContainer.innerHTML += "No items found.";
-      return;
-    }
-
-    notes.forEach(({ id, value }) => {
-      const title = this._getTitle(value);
-      this.notesContainer.innerHTML += `
-                <div class="note-item">
-                    <div class="note-item__title">${title}</div>
-                    <div class="note-item__actions">
-                    <button class="button button--icon" data-id="${id}" data-action="${OPEN_ACTION}">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <button class="button button--icon" data-id="${id}" data-action="${REMOVE_ACTION}">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                    </div>
-                </div>
-            `;
+      notes.forEach(({ id, title }) => {
+        this.notesContainer.innerHTML += `
+          <div class="note-item">
+              <div class="note-item__title">${title}</div>
+              <div class="note-item__actions">
+              <button class="button button--icon" data-id="${id}" data-action="${OPEN_ACTION}">
+                  <i class="fa fa-edit"></i>
+              </button>
+              <button class="button button--icon" data-id="${id}" data-action="${REMOVE_ACTION}">
+                  <i class="fa fa-trash"></i>
+              </button>
+              </div>
+          </div>
+        `;
+      });
     });
   }
 }

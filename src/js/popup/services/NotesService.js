@@ -1,3 +1,4 @@
+
 import { NOTES_STORAGE_KEY, NOTES_DRAFT_KEY } from '../../_constants';
 
 export class NotesService {
