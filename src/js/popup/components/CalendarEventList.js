@@ -1,9 +1,12 @@
 import { MESSAGE_NAMES } from "../../shared/constants";
 
+const MAX_EVENTS_LENGTH = 5;
+
 export class CalendarEventList {
-  constructor() {
-    this._containerEl = document.getElementById("template-list-items");
+  constructor(onClickEvent = () => {}) {
+    this._containerEl = document.getElementById("template-list");
     this._getCalendarEvents();
+    this._onClickEventHandler = onClickEvent;
   }
 
   _getCalendarEvents() {
@@ -17,6 +20,7 @@ export class CalendarEventList {
         const { data } = result || {};
         this._events = data.events;
       })
+      .then(() => this._filterEvents())
       .then(() => this._render());
   }
 
@@ -35,11 +39,18 @@ export class CalendarEventList {
     this._containerEl.innerHTML = "";
   }
 
+  _filterEvents() {
+    this._events = this._events.slice(0, MAX_EVENTS_LENGTH);
+  }
+
   _createEvent(event) {
     const { summary } = event;
     const newDiv = document.createElement("div");
     newDiv.classList.add("template-list-item");
     newDiv.innerHTML = `${summary}`;
+    newDiv.addEventListener("click", () => {
+      this._onClickEventHandler(event);
+    });
     this._containerEl.append(newDiv);
   }
 }

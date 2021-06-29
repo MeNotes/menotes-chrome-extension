@@ -1,6 +1,7 @@
 import { Page } from "./page";
 import { Editor } from "../components/Editor";
 import { CalendarEventList } from "../components/CalendarEventList";
+import { toggleFullScreen } from "simplemde";
 
 export class EditorPage extends Page {
   constructor(notesService, toolbarService) {
@@ -15,7 +16,9 @@ export class EditorPage extends Page {
     this.toolbarService = toolbarService;
 
     this.note = null;
-    this.calendarEventList = new CalendarEventList();
+    this.calendarEventList = new CalendarEventList((e) =>
+      this._onClickGoogleEventHandler(e)
+    );
 
     this.toolbarService.getVisibility().then((value) => {
       this.editor = new Editor({
@@ -29,7 +32,6 @@ export class EditorPage extends Page {
 
   init([id]) {
     super.init();
-
     this.notesService
       .getNoteById(id)
       .then((note) => {
@@ -46,6 +48,12 @@ export class EditorPage extends Page {
           return;
         }
       });
+  }
+
+  _onClickGoogleEventHandler(event) {
+    this.editor.setNote({
+      value: this.notesService.getPreFilledGoogleEventNote(event),
+    });
   }
 
   _onSaveClickHandler({ value }) {

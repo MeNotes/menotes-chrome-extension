@@ -5,9 +5,9 @@ export class NotesService {
     this.storageService = storageService;
   }
 
-  createNote({ title, value }) {
+  createNote({ value }) {
     return this._getNotes().then((notes) => {
-      return this._writeNotes([this._createNote({ title, value }), ...notes]);
+      return this._writeNotes([this._createNote({ value }), ...notes]);
     });
   }
 
@@ -19,14 +19,13 @@ export class NotesService {
     return this.getNotes().then((notes) => notes.find((n) => n.id === id));
   }
 
-  updateNote(id, { title, value }) {
+  updateNote(id, { value }) {
     return this._getNotes().then((notes) => {
       const note = notes.find((n) => n.id === id);
       if (!note) {
         throw new Error("Item not found.");
       }
 
-      note.title = title;
       note.value = value;
       note.updateDate = Date.now();
 
@@ -61,14 +60,30 @@ export class NotesService {
     return this._writeDraftNote(null);
   }
 
-  _createNote({ title, value }) {
+  getPreFilledGoogleEventNote(event) {
+    const eventDate = new Date(event.start.dateTime);
+    let dd = eventDate.getDate();
+    let mm = eventDate.getMonth() + 1;
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    const date = `${dd}/${mm}`;
+    const agenda = event.description
+      ? `### Agenda \n \n ${event.description}`
+      : "";
+    return `## ${event.summary} (${date}) \n \n ${agenda}`;
+  }
+
+  _createNote({ value }) {
     const time = Date.now();
     return {
       id: time,
       createDate: time,
       updateDate: time,
       isDeleted: false,
-      title,
       value,
     };
   }
