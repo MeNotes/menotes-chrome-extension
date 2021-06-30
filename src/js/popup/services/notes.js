@@ -60,23 +60,6 @@ export class NotesService {
     return this._writeDraftNote(null);
   }
 
-  getPreFilledGoogleEventNote(event) {
-    const eventDate = new Date(event.start.dateTime);
-    let dd = eventDate.getDate();
-    let mm = eventDate.getMonth() + 1;
-    if (dd < 10) {
-      dd = "0" + dd;
-    }
-    if (mm < 10) {
-      mm = "0" + mm;
-    }
-    const date = `${dd}/${mm}`;
-    const agenda = event.description
-      ? `### Agenda \n \n ${event.description}`
-      : "";
-    return `## ${event.summary} (${date}) \n \n ${agenda}`;
-  }
-
   _createNote({ value }) {
     const time = Date.now();
     return {

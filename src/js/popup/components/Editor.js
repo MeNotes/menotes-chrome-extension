@@ -24,7 +24,7 @@ export class Editor {
     );
 
     copyButton.addEventListener("click", () => {
-      this._copyTextToClipboard(this.getEditorValue());
+      this._copyTextToClipboard(this.simplemde.value());
     });
 
     saveButton.addEventListener("click", () => {

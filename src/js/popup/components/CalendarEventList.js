@@ -1,56 +1,47 @@
-import { MESSAGE_NAMES } from "../../shared/constants";
+import { HIDDEN_CLASS_NAME } from "../../shared/constants";
 
 const MAX_EVENTS_LENGTH = 5;
 
 export class CalendarEventList {
-  constructor(onClickEvent = () => {}) {
-    this._containerEl = document.getElementById("template-list");
-    this._getCalendarEvents();
-    this._onClickEventHandler = onClickEvent;
+  constructor({ events, onEventClick }) {
+    this._containerEl = document.getElementById("calendar-event-list");
+    this._containerEl.addEventListener("click", ({ target }) => {
+      if (!target.dataset.eventId) return;
+
+      const event = events.find((e) => e.id === target.dataset.eventId);
+      if (!event) {
+        console.debug("Event is not found", event);
+        return;
+      }
+
+      onEventClick(event);
+    });
+
+    this._events = events.slice(0, MAX_EVENTS_LENGTH);
+    this._init();
   }
 
-  _getCalendarEvents() {
-    return new Promise((res) => {
-      chrome.runtime.sendMessage(
-        { name: MESSAGE_NAMES.GET_CALENDAR_EVENTS },
-        res
-      );
-    })
-      .then((result) => {
-        const { data } = result || {};
-        this._events = data.events;
-      })
-      .then(() => this._filterEvents())
-      .then(() => this._render());
-  }
-
-  _render() {
-    if (!this._events || !this._events.length) {
+  _init() {
+    if (!this._events.length) {
       return;
     }
+
     this._clearList();
-
-    this._events.map((e) => this._createEvent(e));
-
-    this._containerEl.style.display = "flex";
+    this._events.forEach((e) => {
+      this._containerEl.innerHTML += this._createEvent(e);
+    });
+    this._containerEl.classList.remove(HIDDEN_CLASS_NAME);
   }
 
   _clearList() {
     this._containerEl.innerHTML = "";
   }
 
-  _filterEvents() {
-    this._events = this._events.slice(0, MAX_EVENTS_LENGTH);
-  }
-
-  _createEvent(event) {
-    const { summary } = event;
-    const newDiv = document.createElement("div");
-    newDiv.classList.add("template-list-item");
-    newDiv.innerHTML = `${summary}`;
-    newDiv.addEventListener("click", () => {
-      this._onClickEventHandler(event);
-    });
-    this._containerEl.append(newDiv);
+  _createEvent({ id, summary }) {
+    return `
+      <button class="calendar-event-list__item" data-event-id="${id}">
+        ${summary}
+      </button>
+    `;
   }
 }
