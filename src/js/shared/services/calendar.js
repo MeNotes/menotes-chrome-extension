@@ -34,6 +34,7 @@ class ChromeRuntimeCalendarService extends BaseGoogleCalendarService {
         res
       );
     }).then(({ data }) => {
+      console.debug("Events data", data);
       if (!data || !data.events) {
         throw new Error("No data");
       }

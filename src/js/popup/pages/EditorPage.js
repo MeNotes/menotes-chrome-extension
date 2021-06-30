@@ -72,7 +72,10 @@ export class EditorPage extends Page {
   _loadCalendarEvents() {
     return this.calendarService
       .getCalendarEvents()
-      .catch(() => [])
+      .catch((err) => {
+        console.debug(err);
+        return [];
+      })
       .then((events) => {
         new CalendarEventList({
           events,

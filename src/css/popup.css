@@ -19,6 +19,7 @@ body {
   border: 1px solid #95a5a6;
   border-radius: 3px;
   color: #2c3e50 !important;
+  cursor: pointer;
 }
 
 .button > i,
@@ -49,6 +50,17 @@ body {
   grid-gap: 10px;
 }
 
+.editor-page__header {
+  display: flex;
+  gap: 10px;
+}
+
+.editor-page__create-button {
+  margin-left: auto;
+  padding: 3px;
+  font-size: 20px;
+}
+
 .editor-page__note-title.CodeMirror {
   min-height: 0;
 }
@@ -68,6 +80,8 @@ body {
   border: none;
   background: none;
   opacity: 0.25;
+
+  cursor: pointer;
 }
 
 .editor__toolbar-button:hover {
@@ -92,13 +106,6 @@ body {
   position: absolute;
   bottom: 5px;
   right: 0;
-  font-size: 20px;
-}
-
-.editor__toolbar-clear {
-  position: absolute;
-  bottom: 5px;
-  right: 25px;
   font-size: 20px;
 }
 
