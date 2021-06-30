@@ -1,3 +1,4 @@
+import secrets from "secrets";
 import { MESSAGE_NAMES } from "../constants/messages";
 import { events } from "./calendar.json";
 
@@ -39,11 +40,12 @@ class ChromeRuntimeCalendarService extends BaseGoogleCalendarService {
       if (!data || !data.events) {
         throw new Error("No data");
       }
-      return this._withIds(events);
+      return this._withIds(data.events);
     });
   }
 }
 
-export const GoogleCalendarService = Boolean(chrome.runtime)
-  ? ChromeRuntimeCalendarService
-  : MockCalendarService;
+export const GoogleCalendarService =
+  secrets.env === "development" && !Boolean(chrome.runtime)
+    ? MockCalendarService
+    : ChromeRuntimeCalendarService;
