@@ -68,7 +68,7 @@ export class NotesPage extends Page {
       }
 
       notes.forEach(({ id, value }) => {
-        const title = this._getNoteTitle(value);
+        const title = this._getNoteTitle(value.trim());
         this.notesContainer.innerHTML += `
           <div class="note-item">
               <div class="note-item__title">${title}</div>
