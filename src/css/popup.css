@@ -61,10 +61,7 @@ body {
   position: relative;
 }
 
-.editor__toolbar-toggle {
-  position: absolute;
-  top: 0;
-  right: 0;
+.editor__toolbar-button {
   z-index: 10;
   padding-top: 5px;
 
@@ -73,8 +70,14 @@ body {
   opacity: 0.25;
 }
 
-.editor__toolbar-toggle:hover {
+.editor__toolbar-button:hover {
   opacity: 0.5;
+}
+
+.editor__toolbar-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .editor__toolbar-toggle:before {
@@ -83,6 +86,13 @@ body {
 
 .editor__toolbar-toggle.inactive:before {
   content: "\f204";
+}
+
+.editor__toolbar-copy {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+  font-size: 20px;
 }
 
 .notes-page__container {

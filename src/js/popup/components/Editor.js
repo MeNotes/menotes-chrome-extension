@@ -17,7 +17,7 @@ export class Editor {
 
     const toolbar = document.querySelector(".editor-toolbar");
 
-    const copyButton = document.getElementById("copy-note");
+    const copyButton = document.getElementById("copy-note-button");
     const toolbarToggleButton = document.getElementById(
       "toggle-toolbar-button"
     );
