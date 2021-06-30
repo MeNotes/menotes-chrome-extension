@@ -11,6 +11,7 @@ export class NotesPage extends Page {
     super(NotesPage.id);
 
     this.init = this.init.bind(this);
+    this._onItemClickHandler = this._onItemClickHandler.bind(this);
     this._renderNotesList = this._renderNotesList.bind(this);
 
     this.notesService = notesService;
@@ -18,27 +19,16 @@ export class NotesPage extends Page {
 
     this.notesContainer = document.getElementById("notes-js");
 
-    this.notesContainer.addEventListener("click", (e) => {
-      const noteId = Number(e.target.dataset.id);
-      const action = e.target.dataset.action;
+    this.notesContainer.addEventListener("click", ({ target }) => {
+      const noteId = target.dataset.id;
+      const action = target.dataset.action;
 
-      if (isNaN(noteId) || !ACTIONS.includes(action)) {
+      if (!noteId || !ACTIONS.includes(action)) {
         console.error("error", noteId, action);
         return;
       }
 
-      switch (action) {
-        case OPEN_ACTION:
-          this.routerService.openPage(EditorPage.id, noteId);
-          break;
-        case REMOVE_ACTION:
-          this.notesService
-            .removeNote(noteId)
-            .then(() => this._renderNotesList());
-          break;
-        default:
-          console.error("Unknown action");
-      }
+      this._onItemClickHandler(noteId, action);
     });
   }
 
@@ -47,9 +37,26 @@ export class NotesPage extends Page {
     this._renderNotesList();
   }
 
-  _getNoteTitle(str = '') {
+  _getNoteTitle(str = "") {
     const [title] = str.split("\n");
     return title;
+  }
+
+  _onItemClickHandler(noteId, action) {
+    switch (action) {
+      case OPEN_ACTION:
+        this.notesService.setActiveNoteId(noteId).then(() => {
+          this.routerService.openPage(EditorPage.id);
+        });
+        break;
+      case REMOVE_ACTION:
+        this.notesService
+          .removeNote(noteId)
+          .then(() => this._renderNotesList());
+        break;
+      default:
+        console.error("Unknown action");
+    }
   }
 
   _renderNotesList() {

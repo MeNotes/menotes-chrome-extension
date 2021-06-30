@@ -2,7 +2,7 @@ import SimpleMDE from "simplemde";
 import "simplemde/dist/simplemde.min.css";
 
 export class Editor {
-  constructor({ onSave, onChange, isToolbarActive, onToolbarActiveChange }) {
+  constructor({ onChange, isToolbarActive, onToolbarActiveChange }) {
     this.setNote = this.setNote.bind(this);
     this._copyTextToClipboard = this._copyTextToClipboard.bind(this);
     this._onChangeHandler = this._onChangeHandler.bind(this);
@@ -18,17 +18,12 @@ export class Editor {
     const toolbar = document.querySelector(".editor-toolbar");
 
     const copyButton = document.getElementById("copy-note");
-    const saveButton = document.getElementById("save-note");
     const toolbarToggleButton = document.getElementById(
       "toggle-toolbar-button"
     );
 
     copyButton.addEventListener("click", () => {
       this._copyTextToClipboard(this.simplemde.value());
-    });
-
-    saveButton.addEventListener("click", () => {
-      onSave({ value: this.simplemde.value() });
     });
 
     this.simplemde.codemirror.on("change", this._onChangeHandler(onChange));

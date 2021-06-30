@@ -2,13 +2,15 @@ import { Page } from "./page";
 import { Editor } from "../components/Editor";
 import { CalendarEventList } from "../components/CalendarEventList";
 import { HIDDEN_CLASS_NAME } from "../../shared/constants";
+import { debounce } from "../../shared/utils";
 
 export class EditorPage extends Page {
   constructor(notesService, toolbarService, calendarService) {
     super(EditorPage.id);
 
     this.init = this.init.bind(this);
-    this._onSaveClickHandler = this._onSaveClickHandler.bind(this);
+    this._loadEditor = this._loadEditor.bind(this);
+    this._loadCalendarEvents = this._loadCalendarEvents.bind(this);
     this._onEditorChangeHandler = this._onEditorChangeHandler.bind(this);
     this._onToolbarActiveChange = this._onToolbarActiveChange.bind(this);
     this._onClickGoogleEventHandler =
@@ -20,13 +22,53 @@ export class EditorPage extends Page {
     this.toolbarService = toolbarService;
     this.calendarService = calendarService;
 
-    const calendarLoadingContainer = document.getElementById(
+    this.calendarLoadingContainer = document.getElementById(
       "calendar-event-loader"
     );
 
-    this.note = null;
+    this.noteId = null;
+    this.editorOnload = new Promise((resolve) => {
+      this._loadEditor()
+        .then((editor) => {
+          this.editor = editor;
+          return this._loadCalendarEvents();
+        })
+        .then(() => {
+          resolve();
+        });
+    });
+  }
 
-    this.calendarService
+  init() {
+    super.init();
+
+    this.editorOnload
+      .then(() => {
+        this.editor.setNote("");
+        return this.notesService.getActiveNote();
+      })
+      .then((note) => {
+        if (!note) {
+          return;
+        }
+
+        this.noteId = note.id;
+        this.editor.setNote(note);
+      });
+  }
+
+  _loadEditor() {
+    return this.toolbarService.getVisibility().then((visibility) => {
+      return new Editor({
+        onChange: debounce(this._onEditorChangeHandler, 300),
+        isToolbarActive: visibility,
+        onToolbarActiveChange: this._onToolbarActiveChange,
+      });
+    });
+  }
+
+  _loadCalendarEvents() {
+    return this.calendarService
       .getCalendarEvents()
       .catch(() => [])
       .then((events) => {
@@ -36,36 +78,7 @@ export class EditorPage extends Page {
         });
       })
       .finally(() => {
-        calendarLoadingContainer.classList.add(HIDDEN_CLASS_NAME);
-      });
-
-    this.toolbarService.getVisibility().then((visibility) => {
-      this.editor = new Editor({
-        onSave: this._onSaveClickHandler,
-        onChange: this._onEditorChangeHandler,
-        isToolbarActive: visibility,
-        onToolbarActiveChange: this._onToolbarActiveChange,
-      });
-    });
-  }
-
-  init([id]) {
-    super.init();
-    this.notesService
-      .getNoteById(id)
-      .then((note) => {
-        if (note) {
-          this.note = note;
-          return this.notesService.updateDraftNote(note);
-        }
-      })
-      .then(() => this.notesService.getDraftNote())
-      .then((draftNote) => {
-        if (draftNote && draftNote.id) this.note = draftNote;
-        if (draftNote) {
-          this.editor.setNote(draftNote);
-          return;
-        }
+        this.calendarLoadingContainer.classList.add(HIDDEN_CLASS_NAME);
       });
   }
 
@@ -75,24 +88,16 @@ export class EditorPage extends Page {
     });
   }
 
-  _onSaveClickHandler({ value }) {
-    this.notesService.removeDraftNote().then(() => {
-      if (!this.note) {
-        this.notesService.createNote({ value });
-        return;
-      }
-
-      this.notesService.updateNote(this.note.id, { value });
-      this.note = null;
-    });
-  }
-
   _onEditorChangeHandler({ value }) {
-    if (this.note) {
-      return this.notesService.updateDraftNote({ ...this.note, value });
+    console.log(this.noteId);
+    if (!this.noteId) {
+      return this.notesService.createNote({ value }).then((id) => {
+        this.noteId = id;
+        return this.notesService.setActiveNoteId(id);
+      });
     }
 
-    return this.notesService.updateDraftNote({ value });
+    return this.notesService.updateNote(this.noteId, { value });
   }
 
   _onToolbarActiveChange(value) {

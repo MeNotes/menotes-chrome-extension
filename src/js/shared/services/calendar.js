@@ -1,5 +1,6 @@
 import secrets from "secrets";
 import { MESSAGE_NAMES } from "../constants/messages";
+import { generateId } from "../utils";
 import { events } from "./calendar.json";
 
 class BaseGoogleCalendarService {
@@ -7,13 +8,9 @@ class BaseGoogleCalendarService {
     throw new Error("method should be implemented");
   }
 
-  _generateId() {
-    return (Date.now() + Math.random()).toString(36);
-  }
-
   _withIds(events) {
     return events.map((e) => {
-      e.id = this._generateId();
+      e.id = generateId();
       return e;
     });
   }
