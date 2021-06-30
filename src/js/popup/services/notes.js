@@ -67,6 +67,10 @@ export class NotesService {
     return this._writeActiveNoteId(id);
   }
 
+  removeActiveNoteId() {
+    return this._writeActiveNoteId(null);
+  }
+
   _createNote({ value }) {
     const time = generateId();
     return {

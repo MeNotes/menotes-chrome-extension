@@ -39,7 +39,7 @@ export class NotesPage extends Page {
 
   _getNoteTitle(str = "") {
     const [title] = str.split("\n");
-    return title;
+    return title || ["Draft note..."];
   }
 
   _onItemClickHandler(noteId, action) {

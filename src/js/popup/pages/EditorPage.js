@@ -13,6 +13,7 @@ export class EditorPage extends Page {
     this._loadCalendarEvents = this._loadCalendarEvents.bind(this);
     this._onEditorChangeHandler = this._onEditorChangeHandler.bind(this);
     this._onToolbarActiveChange = this._onToolbarActiveChange.bind(this);
+    this._onClearClickHandler = this._onClearClickHandler.bind(this);
     this._onClickGoogleEventHandler =
       this._onClickGoogleEventHandler.bind(this);
     this._getPreFilledGoogleEventNote =
@@ -27,28 +28,28 @@ export class EditorPage extends Page {
     );
 
     this.noteId = null;
-    this.editorOnload = new Promise((resolve) => {
-      this._loadEditor()
-        .then((editor) => {
-          this.editor = editor;
-          return this._loadCalendarEvents();
-        })
-        .then(() => {
-          resolve();
-        });
+    this.editorLoaded = new Promise((resolve) => {
+      this._loadEditor().then((editor) => {
+        this.editor = editor;
+        resolve();
+
+        return this._loadCalendarEvents();
+      });
     });
   }
 
   init() {
     super.init();
 
-    this.editorOnload
+    this.editorLoaded
       .then(() => {
-        this.editor.setNote("");
+        this.editor.clear();
         return this.notesService.getActiveNote();
       })
       .then((note) => {
         if (!note) {
+          this.noteId = null;
+          this.editor.clear();
           return;
         }
 
@@ -60,6 +61,7 @@ export class EditorPage extends Page {
   _loadEditor() {
     return this.toolbarService.getVisibility().then((visibility) => {
       return new Editor({
+        onClear: this._onClearClickHandler,
         onChange: debounce(this._onEditorChangeHandler, 300),
         isToolbarActive: visibility,
         onToolbarActiveChange: this._onToolbarActiveChange,
@@ -89,7 +91,6 @@ export class EditorPage extends Page {
   }
 
   _onEditorChangeHandler({ value }) {
-    console.log(this.noteId);
     if (!this.noteId) {
       return this.notesService.createNote({ value }).then((id) => {
         this.noteId = id;
@@ -131,6 +132,13 @@ export class EditorPage extends Page {
       ? `### Agenda \n \n ${event.description}`
       : "";
     return `## ${event.summary} (${date}) \n \n ${agenda}`;
+  }
+
+  _onClearClickHandler() {
+    return this.notesService.removeActiveNoteId().then(() => {
+      this.noteId = null;
+      this.editor.clear();
+    });
   }
 }
 
