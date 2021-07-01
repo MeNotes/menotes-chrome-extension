@@ -1,5 +1,5 @@
 import { generateId } from "../../shared/utils";
-import { NOTES_STORAGE_KEY, ACTIVE_NOTE_ID } from "../../_constants";
+import { NOTES_STORAGE_KEY, ACTIVE_NOTE_ID } from "../../shared/constants";
 
 export class NotesService {
   constructor(storageService) {
