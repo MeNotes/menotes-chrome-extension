@@ -1,4 +1,5 @@
-import { NOTES_STORAGE_KEY, NOTES_DRAFT_KEY } from "../../_constants";
+import { generateId } from "../../shared/utils";
+import { NOTES_STORAGE_KEY, ACTIVE_NOTE_ID } from "../../_constants";
 
 export class NotesService {
   constructor(storageService) {
@@ -6,9 +7,13 @@ export class NotesService {
   }
 
   createNote({ value }) {
-    return this._getNotes().then((notes) => {
-      return this._writeNotes([this._createNote({ value }), ...notes]);
-    });
+    const note = this._createNote({ value });
+
+    return this._getNotes()
+      .then((notes) => {
+        this._writeNotes([note, ...notes]);
+      })
+      .then(() => note.id);
   }
 
   getNotes() {
@@ -48,20 +53,26 @@ export class NotesService {
     });
   }
 
-  getDraftNote() {
-    return this._getDraftNote();
+  getActiveNote() {
+    return this._getActiveNoteId().then((id) => {
+      if (!id) {
+        return;
+      }
+
+      return this.getNoteById(id);
+    });
   }
 
-  updateDraftNote(note) {
-    return this._writeDraftNote(note);
+  setActiveNoteId(id) {
+    return this._writeActiveNoteId(id);
   }
 
-  removeDraftNote() {
-    return this._writeDraftNote(null);
+  removeActiveNoteId() {
+    return this._writeActiveNoteId(null);
   }
 
   _createNote({ value }) {
-    const time = Date.now();
+    const time = generateId();
     return {
       id: time,
       createDate: time,
@@ -75,19 +86,23 @@ export class NotesService {
     return this._getStorageItem(NOTES_STORAGE_KEY).then((value) => value || []);
   }
 
-  _getDraftNote() {
-    return this._getStorageItem(NOTES_DRAFT_KEY);
+  _getActiveNoteId() {
+    return this._getStorageItem(ACTIVE_NOTE_ID);
   }
 
-  _writeNotes(note) {
-    return this.storageService.set(NOTES_STORAGE_KEY, note);
+  _writeActiveNoteId(id) {
+    return this._setStorageItem(ACTIVE_NOTE_ID, id);
   }
 
-  _writeDraftNote(note) {
-    return this.storageService.set(NOTES_DRAFT_KEY, note);
+  _writeNotes(notes) {
+    return this._setStorageItem(NOTES_STORAGE_KEY, notes);
   }
 
   _getStorageItem(key) {
     return this.storageService.get(key);
+  }
+
+  _setStorageItem(key, value) {
+    return this.storageService.set(key, value);
   }
 }

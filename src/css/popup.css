@@ -19,6 +19,7 @@ body {
   border: 1px solid #95a5a6;
   border-radius: 3px;
   color: #2c3e50 !important;
+  cursor: pointer;
 }
 
 .button > i,
@@ -49,6 +50,17 @@ body {
   grid-gap: 10px;
 }
 
+.editor-page__header {
+  display: flex;
+  gap: 10px;
+}
+
+.editor-page__create-button {
+  margin-left: auto;
+  padding: 3px;
+  font-size: 20px;
+}
+
 .editor-page__note-title.CodeMirror {
   min-height: 0;
 }
@@ -61,20 +73,25 @@ body {
   position: relative;
 }
 
-.editor__toolbar-toggle {
-  position: absolute;
-  top: 0;
-  right: 0;
+.editor__toolbar-button {
   z-index: 10;
   padding-top: 5px;
 
   border: none;
   background: none;
   opacity: 0.25;
+
+  cursor: pointer;
 }
 
-.editor__toolbar-toggle:hover {
+.editor__toolbar-button:hover {
   opacity: 0.5;
+}
+
+.editor__toolbar-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .editor__toolbar-toggle:before {
@@ -83,6 +100,13 @@ body {
 
 .editor__toolbar-toggle.inactive:before {
   content: "\f204";
+}
+
+.editor__toolbar-copy {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+  font-size: 20px;
 }
 
 .notes-page__container {

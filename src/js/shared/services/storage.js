@@ -20,8 +20,9 @@ class LocalStorageService extends BaseStorageService {
   get(key) {
     return new Promise((resolve) => {
       const item = localStorage.getItem(key);
-      if (item === undefined || item === null) {
-        return item;
+      if (item === null || item === "undefined") {
+        resolve();
+        return;
       }
 
       resolve(JSON.parse(item));
@@ -37,7 +38,8 @@ class LocalStorageService extends BaseStorageService {
 
   remove(key) {
     return new Promise((resolve) => {
-      resolve(localStorage.removeItem(key));
+      localStorage.removeItem(key);
+      resolve();
     });
   }
 
