@@ -31,9 +31,9 @@ export class GApi {
   }
 
   getCalendarEvents() {
-    return this._withAuthErrorCatch(
-      this.gapiClient.then(() => this._getCalendarEvents())
-    );
+    return this._withAuthErrorCatch(() => {
+      return this.gapiClient.then(() => this._getCalendarEvents());
+    });
   }
 
   _getCalendarEvents() {
@@ -87,17 +87,11 @@ export class GApi {
   }
 
   _refreshToken() {
-    return this._getAccessToken()
-      .then(this._setAccessToken)
-      .then(
-        setTimeout(() => {
-          this._setAccessToken("uytrewq");
-        }, 3000)
-      );
+    return this._getAccessToken().then(this._setAccessToken);
   }
 
-  _withAuthErrorCatch(resolver, attempt = 1) {
-    return resolver.catch(({ result }) => {
+  _withAuthErrorCatch(resolve, attempt = 1) {
+    return resolve().catch(({ result }) => {
       if (
         result &&
         result.error &&
@@ -105,7 +99,7 @@ export class GApi {
         attempt < MAX_METHOD_CALL_ATTEMPTS
       ) {
         return this._refreshToken().then(() =>
-          this._withAuthErrorCatch(resolver, attempt + 1)
+          this._withAuthErrorCatch(resolve, attempt + 1)
         );
       }
 
