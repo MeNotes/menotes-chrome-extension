@@ -90,17 +90,10 @@ export class GApi {
     return this._getAccessToken().then(this._setAccessToken);
   }
 
-  _withAuthErrorCatch(resolve, attempt = 1) {
+  _withAuthErrorCatch(resolve) {
     return resolve().catch(({ result }) => {
-      if (
-        result &&
-        result.error &&
-        result.error.code === 401 &&
-        attempt < MAX_METHOD_CALL_ATTEMPTS
-      ) {
-        return this._refreshToken().then(() =>
-          this._withAuthErrorCatch(resolve, attempt + 1)
-        );
+      if (result && result.error && result.error.code === 401) {
+        return this._refreshToken().then(() => resolve());
       }
 
       throw result.error;
