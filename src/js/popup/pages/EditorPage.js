@@ -26,6 +26,9 @@ export class EditorPage extends Page {
     this.calendarLoadingContainer = document.getElementById(
       "calendar-event-loader"
     );
+    this.calendarErrorContainer = document.getElementById(
+      "calendar-event-error"
+    );
 
     this.noteId = null;
     this.editorLoaded = new Promise((resolve) => {
@@ -72,15 +75,14 @@ export class EditorPage extends Page {
   _loadCalendarEvents() {
     return this.calendarService
       .getCalendarEvents()
-      .catch((err) => {
-        console.debug(err);
-        return [];
-      })
       .then((events) => {
         new CalendarEventList({
           events,
           onEventClick: this._onClickGoogleEventHandler,
         });
+      })
+      .catch(() => {
+        this.calendarErrorContainer.classList.remove(HIDDEN_CLASS_NAME);
       })
       .finally(() => {
         this.calendarLoadingContainer.classList.add(HIDDEN_CLASS_NAME);
@@ -88,12 +90,19 @@ export class EditorPage extends Page {
   }
 
   _onClickGoogleEventHandler(event) {
-    this.editor.setNote({
-      value: this._getPreFilledGoogleEventNote(event),
+    return this.notesService.removeActiveNoteId().then(() => {
+      this.noteId = null;
+      this.editor.setNote({
+        value: this._getPreFilledGoogleEventNote(event),
+      });
     });
   }
 
   _onEditorChangeHandler({ value }) {
+    if ((!this.noteId && !value) || !value.length) {
+      return;
+    }
+
     if (!this.noteId) {
       return this.notesService.createNote({ value }).then((id) => {
         this.noteId = id;
@@ -106,18 +115,6 @@ export class EditorPage extends Page {
 
   _onToolbarActiveChange(value) {
     this.toolbarService.setVisibility(value);
-  }
-
-  _getCalendarEvents() {
-    return new Promise((res) => {
-      chrome.runtime.sendMessage(
-        { name: MESSAGE_NAMES.GET_CALENDAR_EVENTS },
-        res
-      );
-    }).then((result) => {
-      const { data } = result || {};
-      this._events = data.events;
-    });
   }
 
   _getPreFilledGoogleEventNote(event) {

@@ -3,6 +3,7 @@ import { GoogleEvent } from "../models/GoogleEvent";
 const DISCOVERY_DOCS = [
   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
 ];
+const MAX_METHOD_CALL_ATTEMPTS = 2;
 
 export class GApi {
   static instance(...args) {
@@ -21,31 +22,21 @@ export class GApi {
       throw new Error("API TOKEN is not passed!");
     }
 
-    this._inited = false;
-    this._apiToken = secrets.API_GOOGLE_KEY;
-  }
-
-  init() {
-    if (this._inited) return Promise.resolve();
-
-    return gapi.client
+    this.gapiClient = gapi.client
       .init({
-        apiKey: this._apiToken,
+        apiKey: secrets.API_GOOGLE_KEY,
         discoveryDocs: DISCOVERY_DOCS,
       })
-      .then(() => {
-        this._inited = true;
-        return Promise.resolve();
-      })
-      .then(this._getAccessToken)
-      .then(this._setAccessToken);
+      .then(() => this._refreshToken());
   }
 
-  async getCalendarEvents() {
-    if (!this._inited) {
-      await this.init();
-    }
+  getCalendarEvents() {
+    return this._withAuthErrorCatch(() => {
+      return this.gapiClient.then(() => this._getCalendarEvents());
+    });
+  }
 
+  _getCalendarEvents() {
     return gapi.client.calendar.events
       .list({
         calendarId: "primary",
@@ -92,6 +83,20 @@ export class GApi {
     }
     gapi.auth.setToken({
       access_token: accessToken,
+    });
+  }
+
+  _refreshToken() {
+    return this._getAccessToken().then(this._setAccessToken);
+  }
+
+  _withAuthErrorCatch(resolve) {
+    return resolve().catch(({ result }) => {
+      if (result && result.error && result.error.code === 401) {
+        return this._refreshToken().then(() => resolve());
+      }
+
+      throw result.error;
     });
   }
 }
