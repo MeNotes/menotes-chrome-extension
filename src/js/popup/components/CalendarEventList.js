@@ -37,7 +37,7 @@ export class CalendarEventList {
     this._containerEl.innerHTML = "";
   }
 
-  _createEvent({ id, summary }) {
+  _createEvent({ id, summary = "Empty" }) {
     return `
       <button class="calendar-event-list__item" data-event-id="${id}">
         ${summary}
