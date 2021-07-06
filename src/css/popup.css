@@ -3,7 +3,7 @@
 }
 
 body {
-  width: 700px;
+  width: 550px;
   min-height: 300px;
 }
 
@@ -31,8 +31,8 @@ body {
 
 .button--icon {
   padding: 0;
-  height: 25px;
-  width: 25px;
+  height: 15px;
+  width: 15px;
   border: none;
   border-radius: 100%;
 }
@@ -58,6 +58,7 @@ body {
 }
 
 .editor-page__editor .CodeMirror {
+  padding: 0;
   border: none;
 }
 
@@ -130,21 +131,22 @@ body {
   font-size: 20px;
 }
 
-.notes-page__container {
+.note-list {
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 5px;
 }
 
 .note-item {
   display: grid;
-  grid-template-columns: 1fr 50px;
-  padding-bottom: 10px;
+  grid-template-columns: 1fr 30px;
+  gap: 5px;
+  padding: 5px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .note-item__actions {
   display: flex;
-  gap: 10px;
+  gap: 5px;
 }
 
 /* Template list */
