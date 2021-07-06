@@ -1,21 +1,14 @@
-import { EditorPage } from "./EditorPage";
-import { Page } from "./page";
-
 const OPEN_ACTION = "open";
 const REMOVE_ACTION = "remove";
 
 const ACTIONS = [OPEN_ACTION, REMOVE_ACTION];
 
-export class NotesPage extends Page {
-  constructor(notesService, routerService) {
-    super(NotesPage.id);
-
-    this.init = this.init.bind(this);
+export class NotesContainer {
+  constructor(notesService) {
     this._onItemClickHandler = this._onItemClickHandler.bind(this);
     this._renderNotesList = this._renderNotesList.bind(this);
 
     this.notesService = notesService;
-    this.routerService = routerService;
 
     this.notesContainer = document.getElementById("notes-js");
 
@@ -30,10 +23,7 @@ export class NotesPage extends Page {
 
       this._onItemClickHandler(noteId, action);
     });
-  }
 
-  init() {
-    super.init();
     this._renderNotesList();
   }
 
@@ -45,9 +35,7 @@ export class NotesPage extends Page {
   _onItemClickHandler(noteId, action) {
     switch (action) {
       case OPEN_ACTION:
-        this.notesService.setActiveNoteId(noteId).then(() => {
-          this.routerService.openPage(EditorPage.id);
-        });
+        this.notesService.setActiveNoteId(noteId);
         break;
       case REMOVE_ACTION:
         this.notesService
@@ -86,5 +74,3 @@ export class NotesPage extends Page {
     });
   }
 }
-
-NotesPage.id = "notes-page";
