@@ -4,7 +4,7 @@ import { HIDDEN_CLASS_NAME } from "../../shared/constants";
 import { debounce } from "../../shared/utils";
 
 export class EditorContainer {
-  constructor(notesService, toolbarService, calendarService) {
+  constructor(notesService, uiStateService, calendarService) {
     this._loadEditor = this._loadEditor.bind(this);
     this._loadCalendarEvents = this._loadCalendarEvents.bind(this);
     this._onEditorChangeHandler = this._onEditorChangeHandler.bind(this);
@@ -16,7 +16,7 @@ export class EditorContainer {
       this._getPreFilledGoogleEventNote.bind(this);
 
     this.notesService = notesService;
-    this.toolbarService = toolbarService;
+    this.uiStateService = uiStateService;
     this.calendarService = calendarService;
 
     this.calendarLoadingContainer = document.getElementById(
@@ -51,7 +51,7 @@ export class EditorContainer {
   }
 
   _loadEditor() {
-    return this.toolbarService.getVisibility().then((visibility) => {
+    return this.uiStateService.getToolbarVisibility().then((visibility) => {
       return new Editor({
         onClear: this._onClearClickHandler,
         onChange: debounce(this._onEditorChangeHandler, 300),
@@ -103,7 +103,7 @@ export class EditorContainer {
   }
 
   _onToolbarActiveChange(value) {
-    this.toolbarService.setVisibility(value);
+    this.uiStateService.setToolbarVisibility(value);
   }
 
   _getPreFilledGoogleEventNote(event) {
