@@ -1,12 +1,10 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  width: 600px;
+  width: 700px;
   min-height: 300px;
-
-  display: grid;
-  grid-template-columns: auto 30px;
-  grid-gap: 10px;
-
-  padding: 10px;
 }
 
 .hidden {
@@ -46,8 +44,8 @@ body {
 }
 
 .editor-page__container {
-  display: grid;
-  grid-gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .editor-page__header {
@@ -55,8 +53,31 @@ body {
   gap: 10px;
 }
 
-.editor-page__create-button {
+.editor-page__editor {
+  width: 100%;
+}
+
+.editor-page__editor .CodeMirror {
+  border: none;
+}
+
+.editor-page__editor .editor-toolbar {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.editor-page__sidebar {
+  padding: 0 10px;
+  max-width: 200px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.editor-page__actions {
   margin-left: auto;
+}
+
+.editor-page__create-button,
+.editor-page__sidebar-button {
   padding: 3px;
   font-size: 20px;
 }
@@ -116,7 +137,9 @@ body {
 
 .note-item {
   display: grid;
-  grid-template-columns: 1fr 100px;
+  grid-template-columns: 1fr 50px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .note-item__actions {

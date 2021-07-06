@@ -19,13 +19,22 @@
             id="calendar-event-list"
             class="calendar-event-list hidden"
           ></section>
-          <button
-            id="clear-note-button"
-            class="editor-page__create-button editor__toolbar-button"
-            title="Create new note"
-          >
-            <i class="fa fa-edit"></i>
-          </button>
+          <div class="editor-page__actions">
+            <button
+              id="clear-note-button"
+              class="editor-page__create-button editor__toolbar-button"
+              title="Create new note"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+            <button
+              id="toggle-sidebar-button"
+              class="editor-page__sidebar-button editor__toolbar-button"
+              title="Toggle"
+            >
+              <i class="fa fa-columns"></i>
+            </button>
+          </div>
         </div>
 
         <div class="editor-page__container">
@@ -44,21 +53,12 @@
             </button>
             <textarea id="editor"></textarea>
           </div>
+
+          <div id="sidebar" class="editor-page__sidebar">
+            <div id="notes-js" class="notes-page__container"></div>
+          </div>
         </div>
       </div>
-
-      <div id="notes-page">
-        <div id="notes-js" class="notes-page__container"></div>
-      </div>
     </main>
-
-    <aside id="navigation" class="navigation">
-      <button data-page-id="editor-page" class="button">
-        <i class="fa fa-plus"></i>
-      </button>
-      <button data-page-id="notes-page" class="button">
-        <i class="fa fa-list"></i>
-      </button>
-    </aside>
   </body>
 </html>
