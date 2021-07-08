@@ -1,0 +1,230 @@
+.content {
+  min-height: 100vh;
+  width: 60vw;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-header {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clear-storage {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 6px 14px;
+  transition: background-color 0.3s linear 0s;
+  background-color: #f36a6a;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  box-sizing: border-box;
+  border: none;
+}
+
+.clear-storage:hover {
+  background-color: #f14444;
+}
+
+.settings-header_text {
+  font-size: 20px;
+  color: rgb(80, 86, 93);
+}
+
+.settings-block_header {
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.settings-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.delimiter {
+  height: 1px;
+  background-color: rgb(235, 235, 235);
+  margin-bottom: 24px;
+}
+
+.setting-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.setting-item_title {
+  font-size: 14px;
+  color: rgb(38, 38, 38);
+}
+
+.setting-item_description {
+  font-size: 14px;
+  color: rgb(166, 166, 166);
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.setting-item_toggle {
+  width: 36px;
+  height: 22px;
+  position: relative;
+  cursor: pointer;
+  border-radius: 25px;
+  outline: none;
+  border: 3px solid white;
+}
+
+.setting-item_toggle.on {
+  background-color: rgb(65, 194, 152);
+}
+
+.setting-item_toggle.off {
+  background-color: #353b48;
+}
+
+.setting-item_toggle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  will-change: transform;
+  transition: transform 0.2s ease-out;
+  width: 16px;
+  height: 16px;
+  background: white;
+  outline: none;
+  border-radius: 100%;
+}
+
+.setting-item_toggle.on::after {
+  transform: translate(-1px);
+}
+
+.setting-item_toggle.off::after {
+  transform: translate(-15px);
+}
+
+/* Material input */
+.group {
+  position: relative;
+  margin-bottom: 45px;
+}
+input {
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 30px;
+  border: none;
+  border-bottom: 1px solid #757575;
+}
+input:focus {
+  outline: none;
+}
+
+label {
+  color: #999;
+  font-size: 14px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+  top: -20px;
+  font-size: 14px;
+  color: #5264ae;
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: 30px;
+}
+.bar:before,
+.bar:after {
+  content: "";
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #5264ae;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+.bar:before {
+  left: 50%;
+}
+.bar:after {
+  right: 50%;
+}
+
+input:focus ~ .bar:before,
+input:focus ~ .bar:after {
+  width: 50%;
+}
+
+.highlight {
+  position: absolute;
+  height: 60%;
+  width: 30px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+input:focus ~ .highlight {
+  -webkit-animation: inputHighlighter 0.3s ease;
+  -moz-animation: inputHighlighter 0.3s ease;
+  animation: inputHighlighter 0.3s ease;
+}
+
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@-moz-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}

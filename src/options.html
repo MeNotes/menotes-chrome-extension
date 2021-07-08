@@ -1,10 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title></title>
-  </head>
-  <body>
-    <button id="clear-storage-button">Clear storage</button>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <title></title>
+</head>
+
+<body>
+  <main class="content">
+    <section class="settings">
+      <div class="settings-header">
+        <h2 class="settings-header_text">Settings</h2>
+        <button id="clear-storage-button" class="clear-storage">Clear storage</button>
+      </div>
+      <div class="settings-block settings-general">
+        <h3 class="settings-block_header">General</h3>
+        <div class="delimiter"></div>
+        <div class="setting-items">
+          <div class="setting-item">
+            <div class="left">
+              <h3 class="setting-item_title">Enable google calendar synchronization</h3>
+              <p class="setting-item_description">To be able to pre-fill note with agenda from the google calendar.</p>
+            </div>
+            <div class="right">
+              <button class="setting-item_toggle on"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="settings-block settings-view">
+        <h3 class="settings-block_header">View</h3>
+        <div class="delimiter"></div>
+        <div class="setting-items">
+          <div class="setting-item">
+            <div class="left">
+              <h3 class="setting-item_title">Enable markdown helper</h3>
+              <p class="setting-item_description">Show full panel of hints for markdown.</p>
+            </div>
+            <div class="right">
+              <button class="setting-item_toggle on"></button>
+            </div>
+
+          </div>
+          <div class="setting-item">
+            <div class="left">
+              <h3 class="setting-item_title">Width</h3>
+              <p class="setting-item_description">Setup width for note panel in the px. Max: Min:.</p>
+            </div>
+            <div class="right">
+              <div class="group">
+                <input type="text" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>px</label>
+              </div>
+            </div>
+          </div>
+          <div class="setting-item">
+            <div class="left">
+              <h3 class="setting-item_title">Height</h3>
+              <p class="setting-item_description">Setup height for note panel in the px. Max: Min:.</p>
+            </div>
+            <div class="right">
+              <div class="group">
+                <input type="text" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>px</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
 </html>
