@@ -23,7 +23,7 @@
               <p class="setting-item_description">To be able to pre-fill note with agenda from the google calendar.</p>
             </div>
             <div class="right">
-              <button class="setting-item_toggle on"></button>
+              <button id="google-events-toogle" class="setting-item_toggle"></button>
             </div>
           </div>
         </div>
@@ -34,22 +34,12 @@
         <div class="setting-items">
           <div class="setting-item">
             <div class="left">
-              <h3 class="setting-item_title">Enable markdown helper</h3>
-              <p class="setting-item_description">Show full panel of hints for markdown.</p>
-            </div>
-            <div class="right">
-              <button class="setting-item_toggle on"></button>
-            </div>
-
-          </div>
-          <div class="setting-item">
-            <div class="left">
               <h3 class="setting-item_title">Width</h3>
               <p class="setting-item_description">Setup width for note panel in the px. Max: Min:.</p>
             </div>
             <div class="right">
               <div class="group">
-                <input type="text" required>
+                <input id="width-input" type="text" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>px</label>
@@ -63,7 +53,7 @@
             </div>
             <div class="right">
               <div class="group">
-                <input type="text" required>
+                <input id="height-input" type="text" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>px</label>
