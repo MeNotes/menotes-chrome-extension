@@ -138,15 +138,11 @@ body {
 
 .note-item {
   display: grid;
-  grid-template-columns: 1fr 30px;
+  grid-template-columns: 1fr 15px;
   gap: 5px;
   padding: 5px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.note-item__actions {
-  display: flex;
-  gap: 5px;
+  cursor: pointer;
 }
 
 /* Template list */

@@ -58,12 +58,9 @@ export class NotesContainer {
       notes.forEach(({ id, value }) => {
         const title = this._getNoteTitle(value.trim());
         this.notesContainer.innerHTML += `
-          <div class="note-item">
-              <div class="note-item__title">${title}</div>
+          <div class="note-item" data-id="${id}" data-action="${OPEN_ACTION}">
+              <div class="note-item__title" data-id="${id}" data-action="${OPEN_ACTION}">${title}</div>
               <div class="note-item__actions">
-              <button class="button button--icon" data-id="${id}" data-action="${OPEN_ACTION}">
-                  <i class="fa fa-edit"></i>
-              </button>
               <button class="button button--icon" data-id="${id}" data-action="${REMOVE_ACTION}">
                   <i class="fa fa-trash"></i>
               </button>
