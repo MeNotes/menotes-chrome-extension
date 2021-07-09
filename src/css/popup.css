@@ -1,3 +1,7 @@
+:root {
+  --editor-height: 300px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -69,8 +73,9 @@ body {
 
 .editor-page__sidebar {
   padding: 0 10px;
-  max-width: 200px;
+  width: 200px;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: auto;
 }
 
 .editor-page__actions {
@@ -145,6 +150,12 @@ body {
   cursor: pointer;
 }
 
+.note-item__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Template list */
 .calendar-event-loader {
   height: 20px;
@@ -172,4 +183,9 @@ body {
   padding-right: 0.6em;
   padding-left: 0.6em;
   cursor: pointer;
+}
+
+.editor-page__sidebar,
+.CodeMirror .CodeMirror-scroll {
+  height: var(--editor-height);
 }
