@@ -4,13 +4,24 @@ import { NotesContainer } from "./containers/NotesContainer";
 import { HIDDEN_CLASS_NAME } from "../shared/constants";
 
 export class App {
-  constructor(routerService, notesService, uiStateService, calendarService) {
+  constructor(
+    { store },
+    routerService,
+    notesService,
+    uiStateService,
+    calendarService
+  ) {
     this.uiStateService = uiStateService;
     this.routerService = routerService;
     this.routerService.openPage(EditorPage.id);
 
-    new EditorContainer(notesService, uiStateService, calendarService);
-    new NotesContainer(notesService);
+    new EditorContainer(
+      { store },
+      notesService,
+      uiStateService,
+      calendarService
+    );
+    new NotesContainer({ store }, notesService);
 
     const toggleSidebarButton = document.getElementById(
       "toggle-sidebar-button"

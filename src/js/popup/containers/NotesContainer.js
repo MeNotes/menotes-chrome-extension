@@ -4,10 +4,11 @@ const REMOVE_ACTION = "remove";
 const ACTIONS = [OPEN_ACTION, REMOVE_ACTION];
 
 export class NotesContainer {
-  constructor(notesService) {
+  constructor({ store }, notesService) {
     this._onItemClickHandler = this._onItemClickHandler.bind(this);
     this._renderNotesList = this._renderNotesList.bind(this);
 
+    this.store = store;
     this.notesService = notesService;
 
     this.notesContainer = document.getElementById("notes-js");
@@ -25,6 +26,10 @@ export class NotesContainer {
     });
 
     this._renderNotesList();
+
+    this.store.on("notes/update", () => {
+      this._renderNotesList();
+    });
   }
 
   _getNoteTitle(str = "") {
@@ -35,12 +40,14 @@ export class NotesContainer {
   _onItemClickHandler(noteId, action) {
     switch (action) {
       case OPEN_ACTION:
-        this.notesService.setActiveNoteId(noteId);
+        this.notesService.setActiveNoteId(noteId).then(() => {
+          this.store.dispatch("notes/update-active");
+        });
         break;
       case REMOVE_ACTION:
-        this.notesService
-          .removeNote(noteId)
-          .then(() => this._renderNotesList());
+        this.notesService.removeNote(noteId).then(() => {
+          this.store.dispatch("notes/update");
+        });
         break;
       default:
         console.error("Unknown action");

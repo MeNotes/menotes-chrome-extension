@@ -4,7 +4,7 @@ import { HIDDEN_CLASS_NAME } from "../../shared/constants";
 import { debounce } from "../../shared/utils";
 
 export class EditorContainer {
-  constructor(notesService, uiStateService, calendarService) {
+  constructor({ store }, notesService, uiStateService, calendarService) {
     this._loadEditor = this._loadEditor.bind(this);
     this._loadCalendarEvents = this._loadCalendarEvents.bind(this);
     this._onEditorChangeHandler = this._onEditorChangeHandler.bind(this);
@@ -15,6 +15,7 @@ export class EditorContainer {
     this._getPreFilledGoogleEventNote =
       this._getPreFilledGoogleEventNote.bind(this);
 
+    this.store = store;
     this.notesService = notesService;
     this.uiStateService = uiStateService;
     this.calendarService = calendarService;
@@ -48,6 +49,18 @@ export class EditorContainer {
         this.noteId = note.id;
         this.editor.setNote(note);
       });
+
+    this.store.on("notes/update-active", () => {
+      this.notesService.getActiveNote().then((note) => {
+        if (!note) {
+          this.noteId = null;
+          this.editor.clear();
+          return;
+        }
+        this.noteId = note.id;
+        this.editor.setNote(note);
+      });
+    });
   }
 
   _loadEditor() {
@@ -95,11 +108,15 @@ export class EditorContainer {
     if (!this.noteId) {
       return this.notesService.createNote({ value }).then((id) => {
         this.noteId = id;
-        return this.notesService.setActiveNoteId(id);
+        return this.notesService.setActiveNoteId(id).then(() => {
+          this.store.dispatch("notes/update");
+        });
       });
     }
 
-    return this.notesService.updateNote(this.noteId, { value });
+    return this.notesService.updateNote(this.noteId, { value }).then(() => {
+      this.store.dispatch("notes/update");
+    });
   }
 
   _onToolbarActiveChange(value) {
