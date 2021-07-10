@@ -21,4 +21,4 @@ routerService.addRoute(
   new NotesPage(notesService, routerService)
 );
 
-new App(routerService);
+new App(routerService, storageService);

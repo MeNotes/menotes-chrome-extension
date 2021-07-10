@@ -11,7 +11,7 @@ export class UserSettings {
       ...params,
     };
     this.googleSync = googleSync;
-    this.popupWidth = popupWidth;
-    this.popupHeight = popupHeight;
+    this.popupWidth = `${popupWidth}px`;
+    this.popupHeight = `${popupHeight}px`;
   }
 }

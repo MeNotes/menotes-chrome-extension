@@ -1,6 +1,11 @@
+import {
+  MAX_HEIGHT,
+  MAX_WIDTH,
+  MIN_HEIGHT,
+  MIN_WIDTH,
+  USER_OPTIONS_KEY,
+} from "../../shared/constants";
 import { UserSettings } from "../../shared/models";
-
-const USER_OPTIONS_KEY = "user-options";
 
 export class SettingService {
   constructor(storage) {
@@ -50,11 +55,19 @@ export class SettingService {
     });
 
     this.widthInput.addEventListener("blur", (event) => {
+      const width = event.target.value;
+      if (!this.__isWidthValid(width)) {
+        return;
+      }
       this.userSettings.popupWidth = event.target.value;
       this.storageService.set(USER_OPTIONS_KEY, this.userSettings);
     });
 
     this.heightInput.addEventListener("blur", (event) => {
+      const height = event.target.value;
+      if (!this.__isHeightValid(height)) {
+        return;
+      }
       this.userSettings.popupHeight = event.target.value;
       this.storageService.set(USER_OPTIONS_KEY, this.userSettings);
     });
@@ -70,5 +83,13 @@ export class SettingService {
 
     this.googleEventsButton.classList.remove("on");
     this.googleEventsButton.className += " off";
+  }
+
+  __isWidthValid(width) {
+    return +MAX_WIDTH >= +width && +MIN_WIDTH <= +width;
+  }
+
+  __isHeightValid(height) {
+    return +MAX_HEIGHT >= +height && +MIN_HEIGHT <= +height;
   }
 }
