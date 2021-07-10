@@ -2,6 +2,7 @@ import { Editor } from "../components/Editor";
 import { CalendarEventList } from "../components/CalendarEventList";
 import { HIDDEN_CLASS_NAME } from "../../shared/constants";
 import { debounce } from "../../shared/utils";
+import { UPDATE_ACTIVE_NOTE_ACTION, UPDATE_NOTES_ACTION } from "../store";
 
 export class EditorContainer {
   constructor({ store }, notesService, uiStateService, calendarService) {
@@ -50,7 +51,7 @@ export class EditorContainer {
         this.editor.setNote(note);
       });
 
-    this.store.on("notes/update-active", () => {
+    this.store.on(UPDATE_ACTIVE_NOTE_ACTION, () => {
       this.notesService.getActiveNote().then((note) => {
         if (!note) {
           this.noteId = null;
@@ -109,13 +110,13 @@ export class EditorContainer {
       return this.notesService.createNote({ value }).then((id) => {
         this.noteId = id;
         return this.notesService.setActiveNoteId(id).then(() => {
-          this.store.dispatch("notes/update");
+          this.store.dispatch(UPDATE_NOTES_ACTION);
         });
       });
     }
 
     return this.notesService.updateNote(this.noteId, { value }).then(() => {
-      this.store.dispatch("notes/update");
+      this.store.dispatch(UPDATE_NOTES_ACTION);
     });
   }
 

@@ -1,3 +1,5 @@
+import { UPDATE_ACTIVE_NOTE_ACTION, UPDATE_NOTES_ACTION } from "../store";
+
 const OPEN_ACTION = "open";
 const REMOVE_ACTION = "remove";
 
@@ -27,7 +29,7 @@ export class NotesContainer {
 
     this._renderNotesList();
 
-    this.store.on("notes/update", () => {
+    this.store.on(UPDATE_NOTES_ACTION, () => {
       this._renderNotesList();
     });
   }
@@ -41,12 +43,12 @@ export class NotesContainer {
     switch (action) {
       case OPEN_ACTION:
         this.notesService.setActiveNoteId(noteId).then(() => {
-          this.store.dispatch("notes/update-active");
+          this.store.dispatch(UPDATE_ACTIVE_NOTE_ACTION);
         });
         break;
       case REMOVE_ACTION:
         this.notesService.removeNote(noteId).then(() => {
-          this.store.dispatch("notes/update");
+          this.store.dispatch(UPDATE_NOTES_ACTION);
         });
         break;
       default:
