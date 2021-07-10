@@ -1,21 +1,17 @@
-import { EditorPage } from "./EditorPage";
-import { Page } from "./page";
+import { UPDATE_ACTIVE_NOTE_ACTION, UPDATE_NOTES_ACTION } from "../store";
 
 const OPEN_ACTION = "open";
 const REMOVE_ACTION = "remove";
 
 const ACTIONS = [OPEN_ACTION, REMOVE_ACTION];
 
-export class NotesPage extends Page {
-  constructor(notesService, routerService) {
-    super(NotesPage.id);
-
-    this.init = this.init.bind(this);
+export class NotesContainer {
+  constructor({ store }, notesService) {
     this._onItemClickHandler = this._onItemClickHandler.bind(this);
     this._renderNotesList = this._renderNotesList.bind(this);
 
+    this.store = store;
     this.notesService = notesService;
-    this.routerService = routerService;
 
     this.notesContainer = document.getElementById("notes-js");
 
@@ -30,11 +26,12 @@ export class NotesPage extends Page {
 
       this._onItemClickHandler(noteId, action);
     });
-  }
 
-  init() {
-    super.init();
     this._renderNotesList();
+
+    this.store.on(UPDATE_NOTES_ACTION, () => {
+      this._renderNotesList();
+    });
   }
 
   _getNoteTitle(str = "") {
@@ -46,13 +43,13 @@ export class NotesPage extends Page {
     switch (action) {
       case OPEN_ACTION:
         this.notesService.setActiveNoteId(noteId).then(() => {
-          this.routerService.openPage(EditorPage.id);
+          this.store.dispatch(UPDATE_ACTIVE_NOTE_ACTION);
         });
         break;
       case REMOVE_ACTION:
-        this.notesService
-          .removeNote(noteId)
-          .then(() => this._renderNotesList());
+        this.notesService.removeNote(noteId).then(() => {
+          this.store.dispatch(UPDATE_NOTES_ACTION);
+        });
         break;
       default:
         console.error("Unknown action");
@@ -70,12 +67,9 @@ export class NotesPage extends Page {
       notes.forEach(({ id, value }) => {
         const title = this._getNoteTitle(value.trim());
         this.notesContainer.innerHTML += `
-          <div class="note-item">
-              <div class="note-item__title">${title}</div>
+          <div class="note-item" data-id="${id}" data-action="${OPEN_ACTION}">
+              <div class="note-item__title" title="${title}" data-id="${id}" data-action="${OPEN_ACTION}">${title}</div>
               <div class="note-item__actions">
-              <button class="button button--icon" data-id="${id}" data-action="${OPEN_ACTION}">
-                  <i class="fa fa-edit"></i>
-              </button>
               <button class="button button--icon" data-id="${id}" data-action="${REMOVE_ACTION}">
                   <i class="fa fa-trash"></i>
               </button>
@@ -86,5 +80,3 @@ export class NotesPage extends Page {
     });
   }
 }
-
-NotesPage.id = "notes-page";
