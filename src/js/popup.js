@@ -10,7 +10,7 @@ const storageService = new StorageService();
 const notesService = new NotesService(storageService);
 const routerService = new RouterService();
 const toolbarService = new ToolbarService(storageService);
-const calendarService = new GoogleCalendarService();
+const calendarService = new GoogleCalendarService(storageService);
 
 routerService.addRoute(
   EditorPage.id,
