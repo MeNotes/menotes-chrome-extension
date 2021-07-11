@@ -36,6 +36,11 @@
   border-radius: 100%;
 }
 
+.popup-container,
+.editor-page {
+  height: 100%;
+}
+
 .navigation {
   display: grid;
   align-self: start;
@@ -45,6 +50,7 @@
 .editor-page__container {
   display: flex;
   gap: 10px;
+  height: 100%;
 }
 
 .editor-page__header {
@@ -179,5 +185,3 @@
   padding-left: 0.6em;
   cursor: pointer;
 }
-
-
