@@ -6,11 +6,6 @@
   box-sizing: border-box;
 }
 
-body {
-  width: 550px;
-  min-height: 300px;
-}
-
 .hidden {
   display: none;
 }
@@ -41,6 +36,11 @@ body {
   border-radius: 100%;
 }
 
+.popup-container,
+.editor-page {
+  height: 100%;
+}
+
 .navigation {
   display: grid;
   align-self: start;
@@ -50,6 +50,7 @@ body {
 .editor-page__container {
   display: flex;
   gap: 10px;
+  height: 100%;
 }
 
 .editor-page__header {
@@ -83,7 +84,8 @@ body {
 }
 
 .editor-page__create-button,
-.editor-page__sidebar-button {
+.editor-page__sidebar-button,
+.editor-page__settings-button {
   padding: 3px;
   font-size: 20px;
 }
@@ -183,9 +185,4 @@ body {
   padding-right: 0.6em;
   padding-left: 0.6em;
   cursor: pointer;
-}
-
-.editor-page__sidebar,
-.CodeMirror .CodeMirror-scroll {
-  height: var(--editor-height);
 }

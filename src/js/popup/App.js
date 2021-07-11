@@ -35,6 +35,11 @@ export class App {
       );
     });
 
+    const settingsButton = document.getElementById("settings-button");
+    settingsButton.addEventListener("click", () => {
+      chrome.runtime.openOptionsPage();
+    });
+
     return this.uiStateService.getSidebarVisibility().then((visibility) => {
       visibility && sidebar.classList.remove(HIDDEN_CLASS_NAME);
     });

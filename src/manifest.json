@@ -1,5 +1,5 @@
 {
-  "name": "Chrome Extension Notes",
+  "name": "Keepario app",
   "options_page": "options.html",
   "background": {
     "page": "background.html"
