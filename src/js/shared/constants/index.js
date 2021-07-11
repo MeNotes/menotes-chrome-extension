@@ -1,6 +1,7 @@
 export { MESSAGE_NAMES } from "./messages";
 export {
   EDITOR_TOOLBAR_STATUS_KEY,
+  SIDEBAR_STATUS_KEY,
   USER_OPTIONS_KEY,
   MIN_HEIGHT,
   MAX_HEIGHT,

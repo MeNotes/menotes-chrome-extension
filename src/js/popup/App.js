@@ -1,15 +1,42 @@
+import { EditorContainer } from "./containers/EditorContainer";
 import { EditorPage } from "./pages/EditorPage";
+import { NotesContainer } from "./containers/NotesContainer";
+import { HIDDEN_CLASS_NAME } from "../shared/constants";
 
 export class App {
-  constructor(routerService) {
+  constructor(
+    { store },
+    routerService,
+    notesService,
+    uiStateService,
+    calendarService
+  ) {
+    this.uiStateService = uiStateService;
     this.routerService = routerService;
-
     this.routerService.openPage(EditorPage.id);
 
-    const navigationContainer = document.getElementById("navigation");
-    navigationContainer.addEventListener("click", ({ target }) => {
-      if (target.dataset.pageId === undefined) return;
-      this.routerService.openPage(target.dataset.pageId);
+    new EditorContainer(
+      { store },
+      notesService,
+      uiStateService,
+      calendarService
+    );
+    new NotesContainer({ store }, notesService);
+
+    const toggleSidebarButton = document.getElementById(
+      "toggle-sidebar-button"
+    );
+    const sidebar = document.getElementById("sidebar");
+
+    toggleSidebarButton.addEventListener("click", () => {
+      sidebar.classList.toggle(HIDDEN_CLASS_NAME);
+      this.uiStateService.setSidebarVisibility(
+        !sidebar.classList.contains(HIDDEN_CLASS_NAME)
+      );
+    });
+
+    return this.uiStateService.getSidebarVisibility().then((visibility) => {
+      visibility && sidebar.classList.remove(HIDDEN_CLASS_NAME);
     });
   }
 }
