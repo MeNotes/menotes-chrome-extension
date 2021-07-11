@@ -15,7 +15,7 @@ const storageService = new StorageService();
 const notesService = new NotesService(storageService);
 const routerService = new RouterService();
 const uiStateService = new UIStateService(storageService);
-const calendarService = new GoogleCalendarService();
+const calendarService = new GoogleCalendarService(storageService);
 new SizeService(storageService);
 
 routerService.addRoute(EditorPage.id, new EditorPage());

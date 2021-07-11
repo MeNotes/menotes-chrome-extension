@@ -84,7 +84,8 @@
 }
 
 .editor-page__create-button,
-.editor-page__sidebar-button {
+.editor-page__sidebar-button,
+.editor-page__settings-button {
   padding: 3px;
   font-size: 20px;
 }
