@@ -1,8 +1,7 @@
-import { SettingService } from "./services";
+import { OptionsPages } from "./pages";
 
 export class App {
   constructor(storageService) {
-    this.storageService = storageService;
-    this.settingService = new SettingService(storageService);
+    this.optionsPage = new OptionsPages(storageService);
   }
 }

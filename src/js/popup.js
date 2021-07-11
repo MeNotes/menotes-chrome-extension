@@ -4,13 +4,19 @@ import { App } from "./popup/App";
 import { EditorPage } from "./popup/pages/EditorPage";
 import { NotesPage } from "./popup/pages/NotesPage";
 import { StorageService, GoogleCalendarService } from "../js/shared/services";
-import { NotesService, RouterService, ToolbarService } from "./popup/services";
+import {
+  NotesService,
+  RouterService,
+  SizeService,
+  ToolbarService,
+} from "./popup/services";
 
 const storageService = new StorageService();
 const notesService = new NotesService(storageService);
 const routerService = new RouterService();
 const toolbarService = new ToolbarService(storageService);
 const calendarService = new GoogleCalendarService(storageService);
+new SizeService(storageService);
 
 routerService.addRoute(
   EditorPage.id,
@@ -21,4 +27,4 @@ routerService.addRoute(
   new NotesPage(notesService, routerService)
 );
 
-new App(routerService, storageService);
+new App(routerService);

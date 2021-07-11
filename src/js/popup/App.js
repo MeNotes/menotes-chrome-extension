@@ -1,8 +1,7 @@
 import { EditorPage } from "./pages/EditorPage";
-import { SizeService } from "./services";
 
 export class App {
-  constructor(routerService, storageService) {
+  constructor(routerService) {
     this.routerService = routerService;
 
     this.routerService.openPage(EditorPage.id);
@@ -12,7 +11,5 @@ export class App {
       if (target.dataset.pageId === undefined) return;
       this.routerService.openPage(target.dataset.pageId);
     });
-
-    new SizeService(storageService);
   }
 }

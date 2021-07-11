@@ -7,7 +7,7 @@ import {
 } from "../../shared/constants";
 import { UserSettings } from "../../shared/models";
 
-export class SettingService {
+export class OptionsPages {
   constructor(storage) {
     this.storageService = storage;
 
