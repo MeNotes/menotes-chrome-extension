@@ -19,7 +19,7 @@
       "https://www.googleapis.com/auth/calendar.events.readonly"
     ]
   },
-  "permissions": ["identity", "activeTab", "storage"],
+  "permissions": ["identity", "storage"],
   "manifest_version": 2,
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://apis.google.com/; object-src 'self';"
 }
