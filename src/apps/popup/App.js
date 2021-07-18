@@ -1,7 +1,7 @@
 import { EditorContainer } from "./containers/EditorContainer";
 import { EditorPage } from "./pages/EditorPage";
 import { NotesContainer } from "./containers/NotesContainer";
-import { HIDDEN_CLASS_NAME } from "../shared/constants";
+import { HIDDEN_CLASS_NAME } from "../../shared/constants";
 
 export class App {
   constructor(
