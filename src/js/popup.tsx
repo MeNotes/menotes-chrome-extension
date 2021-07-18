@@ -1,8 +1,10 @@
-import "../css/popup.css";
+import React from "react";
+import ReactDOM from "react-dom";
 
+import "../css/popup.css";
 import { App } from "./popup/App";
 import { EditorPage } from "./popup/pages/EditorPage";
-import { StorageService, GoogleCalendarService } from "../js/shared/services";
+import { StorageService, GoogleCalendarService } from "./shared/services";
 import {
   NotesService,
   RouterService,
@@ -26,4 +28,13 @@ new App(
   notesService,
   uiStateService,
   calendarService
+);
+
+const TestApp = (): JSX.Element => <h1>Hey i was build with react and ts!</h1>;
+
+ReactDOM.render(
+  <React.StrictMode>
+    <TestApp />
+  </React.StrictMode>,
+  document.getElementById("root")
 );

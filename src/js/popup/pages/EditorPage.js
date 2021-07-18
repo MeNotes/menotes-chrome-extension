@@ -1,4 +1,4 @@
-import { Page } from "./page";
+import { Page } from "./Page";
 
 export class EditorPage extends Page {
   constructor() {
