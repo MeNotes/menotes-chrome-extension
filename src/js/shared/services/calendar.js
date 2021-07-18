@@ -3,7 +3,7 @@ import { USER_OPTIONS_KEY } from "../constants";
 import { MESSAGE_NAMES } from "../constants/messages";
 import { UserSettings } from "../models";
 import { generateId } from "../utils";
-import { events } from "./calendar.json";
+import calendar from "./calendar.json";
 
 class BaseGoogleCalendarService {
   constructor(storageService) {
@@ -39,7 +39,7 @@ class MockCalendarService extends BaseGoogleCalendarService {
       }
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(this._withIds(events));
+          resolve(this._withIds(calendar.events));
         }, 500);
       });
     });

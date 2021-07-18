@@ -28,6 +28,7 @@ var server = new WebpackDevServer(compiler, {
   hot: true,
   contentBase: path.join(__dirname, "../build"),
   sockPort: env.PORT,
+  writeToDisk: true,
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
