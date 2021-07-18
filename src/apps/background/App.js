@@ -1,4 +1,4 @@
-import { MESSAGE_NAMES } from "../shared/constants";
+import { MESSAGE_NAMES } from "../../shared/constants";
 
 export class App {
   constructor(gApiService) {

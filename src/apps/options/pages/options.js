@@ -4,8 +4,8 @@ import {
   MIN_HEIGHT,
   MIN_WIDTH,
   USER_OPTIONS_KEY,
-} from "../../shared/constants";
-import { UserSettings } from "../../shared/models";
+} from "../../../shared/constants";
+import { UserSettings } from "../../../shared/models";
 
 export class OptionsPages {
   constructor(storage) {

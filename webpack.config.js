@@ -9,9 +9,9 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const options = {
   mode: process.env.NODE_ENV || "development",
   entry: {
-    popup: path.join(__dirname, "src", "js", "popup.tsx"),
-    options: path.join(__dirname, "src", "js", "options.js"),
-    background: path.join(__dirname, "src", "js", "background.js"),
+    popup: path.join(__dirname, "src", "apps", "popup", "index.tsx"),
+    options: path.join(__dirname, "src", "apps", "options", "index.js"),
+    background: path.join(__dirname, "src", "apps", "background", "index.js"),
   },
   output: {
     path: path.join(__dirname, "build"),
