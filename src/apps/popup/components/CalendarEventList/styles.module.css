@@ -3,11 +3,11 @@
   flex-direction: column;
 }
 
-.calendar-event-loader {
+.loader {
     height: 20px;
   }
   
-  .calendar-event-list {
+  .calendar_event_list {
     flex-wrap: nowrap;
     align-items: center;
     padding: 8px 0 8px;
@@ -15,7 +15,7 @@
     overflow: hidden;
   }
   
-  .calendar-event-list__item {
+  .list_item {
     max-width: 100px;
     align-self: center;
     display: inline-block;
