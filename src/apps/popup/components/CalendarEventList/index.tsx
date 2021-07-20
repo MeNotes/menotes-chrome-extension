@@ -1,36 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useStoreon } from "storeon/react";
 import {
-  GoogleCalendarService,
-  StorageService,
-} from "../../../../shared/services";
+  CalendarEventsEvents,
+  CalendarEventsState,
+} from "../../../../store/modules";
 import styles from "./styles.module.css";
 
-function useCalendarEvents() {
-  const [loading, setLoading] = useState(false);
-  const [calendarEvents, setCalendarEvents] = useState([]);
-  const [error, setError] = useState();
-
-  useEffect(() => {
-    const storage = new StorageService();
-    const calendarService = new GoogleCalendarService(storage);
-
-    calendarService
-      .getCalendarEvents()
-      .then((events: any) => {
-        setCalendarEvents(events);
-      })
-      .catch(setError)
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  return { loading, data: calendarEvents, error };
-}
-
 export const CalendarEventList = () => {
-  const { data: events, loading, error } = useCalendarEvents();
-
+  const { events, error, loading } = useStoreon<
+    CalendarEventsState,
+    CalendarEventsEvents
+  >("events");
   return (
     <section className={styles.container}>
       {loading && (
@@ -47,7 +27,7 @@ export const CalendarEventList = () => {
       <div id="calendar-event-list" className={styles.calendar_event_list}>
         {events && events.length
           ? events.map((event: any) => (
-              <button className={styles.list_item} data-event-id={event.id}>
+              <button className={styles.list_item} key={event.id}>
                 ${event.summary}
               </button>
             ))

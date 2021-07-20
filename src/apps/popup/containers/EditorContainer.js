@@ -2,7 +2,7 @@ import { Editor } from "../components/Editor";
 import { CalendarEventList } from "../components/CalendarEventList";
 import { HIDDEN_CLASS_NAME } from "../../shared/constants";
 import { debounce } from "../../shared/utils";
-import { UPDATE_ACTIVE_NOTE_ACTION, UPDATE_NOTES_ACTION } from "../store";
+import { UPDATE_ACTIVE_NOTE_ACTION, UPDATE_NOTES_ACTION } from "../../store";
 
 export class EditorContainer {
   constructor({ store }, notesService, uiStateService, calendarService) {
