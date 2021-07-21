@@ -3,7 +3,6 @@ import { GoogleEvent } from "../models/GoogleEvent";
 const DISCOVERY_DOCS = [
   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
 ];
-const MAX_METHOD_CALL_ATTEMPTS = 2;
 
 export class GApi {
   static instance(...args) {
