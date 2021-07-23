@@ -1,6 +1,7 @@
 import React from "react";
 import { useFetchCalendarEvents } from "../../store/modules";
 import { CalendarEventList } from "./components/CalendarEventList";
+import { Editor } from "./components/Editor";
 import "./styles.css";
 
 export const App = (): JSX.Element => {
@@ -8,9 +9,11 @@ export const App = (): JSX.Element => {
 
   return (
     <main className="popup-container">
+      <CalendarEventList />
+      <Editor />
+
       <div id="editor-page" className="editor-page">
         <div className="editor-page__header">
-          <CalendarEventList />
           <div className="editor-page__actions">
             <button
               id="clear-note-button"
@@ -50,7 +53,6 @@ export const App = (): JSX.Element => {
             >
               <i className="fa fa-clipboard"></i>
             </button>
-            <textarea id="editor"></textarea>
           </div>
 
           <div id="sidebar" className="editor-page__sidebar hidden">
