@@ -1,7 +1,7 @@
 import {
   EDITOR_TOOLBAR_STATUS_KEY,
   SIDEBAR_STATUS_KEY,
-} from "../../shared/constants";
+} from "../../../shared/constants";
 
 export class UIStateService {
   constructor(storageService) {
