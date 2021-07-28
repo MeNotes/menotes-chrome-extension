@@ -10,7 +10,7 @@
     "lint:fix": "eslint . --fix"
   },
   "lint-staged": {
-    "src/**/*.{js}": [
+    "src/**/*.{js, ts, tsx}": [
       "eslint . --fix",
       "git add"
     ]
