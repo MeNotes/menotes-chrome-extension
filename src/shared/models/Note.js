@@ -1,6 +1,6 @@
 export class Note {
   constructor(data) {
-    id: data.value;
-    value: data.value;
+    this.id = data.id;
+    this.value = data.value;
   }
 }
