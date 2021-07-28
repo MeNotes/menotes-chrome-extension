@@ -1,2 +1,2 @@
 export * from "./calendarEvents";
-export * from "./activeNote";
+export * from "./notes";

@@ -12,10 +12,9 @@ import {
 } from "./constants";
 import { CalendarEventsEvents, CalendarEventsState } from "./reducer";
 
-export function useFetchCalendarEvents(): void {
-  const { dispatch } = useStoreon<CalendarEventsState, CalendarEventsEvents>(
-    "events"
-  );
+export function useCalendarEventsQuery() {
+  const { dispatch, events, calendarEventsLoading, calendarEventsError } =
+    useStoreon<CalendarEventsState, CalendarEventsEvents>("events");
 
   useEffect(() => {
     const storage = new StorageService();
@@ -28,8 +27,14 @@ export function useFetchCalendarEvents(): void {
       .then((events: GoogleEvent[]) => {
         dispatch(GET_CALENDAR_EVENTS_SUCCESS, { events });
       })
-      .catch((error: unknown) => {
-        dispatch(GET_CALENDAR_EVENTS_ERROR, { error });
+      .catch((calendarEventsError: unknown) => {
+        dispatch(GET_CALENDAR_EVENTS_ERROR, { calendarEventsError });
       });
   }, [dispatch]);
+
+  return {
+    data: events,
+    loading: calendarEventsLoading,
+    error: calendarEventsError,
+  };
 }

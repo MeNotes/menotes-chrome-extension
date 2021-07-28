@@ -1,12 +1,19 @@
 import { createStoreon } from "storeon";
 import { storeonLogger } from "storeon/devtools";
-import { calendarEventsModule } from "./modules";
-import { notes } from "./notes";
-
-export { UPDATE_ACTIVE_NOTE_ACTION, UPDATE_NOTES_ACTION } from "./notes";
-
-export const store = createStoreon([
+import {
   calendarEventsModule,
-  notes,
+  notesModule,
+  NotesEvents,
+  NotesState,
+  CalendarEventsEvents,
+  CalendarEventsState,
+} from "./modules";
+
+export type State = CalendarEventsState & NotesState;
+export type Events = CalendarEventsEvents & NotesEvents;
+
+export const store = createStoreon<State, Events>([
+  calendarEventsModule,
+  notesModule,
   storeonLogger,
 ]);
