@@ -40,18 +40,11 @@ export function useNotesQuery() {
       .getNotes()
       .then((notes: Note[]) => {
         dispatch(GET_NOTES_SUCCESS, { notes });
+        return notesService.getActiveNoteId();
       })
       .catch((notesError: unknown) => {
         dispatch(GET_NOTES_ERROR, { notesError });
-      });
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!notes) return;
-
-    dispatch(GET_ACTIVE_NOTE_ID);
-    notesService
-      .getActiveNoteId()
+      })
       .then((activeNoteId: string) => {
         if (!activeNoteId) throw new Error("id is undefined");
         dispatch(GET_ACTIVE_NOTE_ID_SUCCESS, { activeNoteId });
@@ -59,7 +52,7 @@ export function useNotesQuery() {
       .catch((notesError: unknown) => {
         dispatch(GET_ACTIVE_NOTE_ID_ERROR, { notesError });
       });
-  }, [dispatch, notes]);
+  }, [dispatch]);
 
   return { notes, activeNoteId };
 }
