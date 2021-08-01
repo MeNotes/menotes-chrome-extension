@@ -56,8 +56,6 @@ export const Editor = () => {
     upsertActiveNote(EMPTY_NOTE);
   };
 
-  // const toggleToolbar = () => {};
-
   const copyEditorValueToClipboard = () => {
     if (!navigator.clipboard) {
       console.error("Clipborad is not available");

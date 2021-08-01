@@ -38,7 +38,7 @@ export const calendarEventsModule: StoreonModule<
     calendarEventsLoading: false,
     calendarEventsError: undefined,
   }));
-  store.on(GET_CALENDAR_EVENTS_ERROR, (payload) => ({
+  store.on(GET_CALENDAR_EVENTS_ERROR, (state, payload) => ({
     events: [],
     calendarEventsLoading: false,
     calendarEventsError: payload.calendarEventsError,

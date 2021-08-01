@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useStoreon } from "storeon/react";
 import { NotesService } from "../../../apps/popup/services";
 import { Note } from "../../../shared/models";
@@ -44,7 +44,12 @@ export function useNotesQuery() {
       .catch((notesError: unknown) => {
         dispatch(GET_NOTES_ERROR, { notesError });
       });
+  }, [dispatch]);
 
+  useEffect(() => {
+    if (!notes) return;
+
+    dispatch(GET_ACTIVE_NOTE_ID);
     notesService
       .getActiveNoteId()
       .then((activeNoteId: string) => {
@@ -54,9 +59,7 @@ export function useNotesQuery() {
       .catch((notesError: unknown) => {
         dispatch(GET_ACTIVE_NOTE_ID_ERROR, { notesError });
       });
-  }, [dispatch]);
-
-  useEffect(() => {}, [dispatch]);
+  }, [dispatch, notes]);
 
   return { notes, activeNoteId };
 }
@@ -96,7 +99,7 @@ export function useNotesMutation() {
       });
   };
 
-  const setActiveNoteId = (activeNoteId: string) => {
+  const setActiveNoteId = (activeNoteId: string | null) => {
     dispatch(SET_ACTIVE_NOTE_ID);
 
     return notesService
@@ -123,10 +126,10 @@ export function useNotesMutation() {
   };
 
   return {
-    upsertNote,
-    upsertActiveNote,
-    removeNote,
-    setActiveNoteId,
-    clearActiveNoteId,
+    upsertNote: useCallback(upsertNote, []),
+    upsertActiveNote: useCallback(upsertActiveNote, []),
+    removeNote: useCallback(removeNote, []),
+    setActiveNoteId: useCallback(setActiveNoteId, []),
+    clearActiveNoteId: useCallback(clearActiveNoteId, []),
   };
 }
