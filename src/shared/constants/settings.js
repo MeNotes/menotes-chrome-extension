@@ -5,4 +5,3 @@ export const MAX_HEIGHT = "540";
 export const MAX_WIDTH = "760";
 export const MIN_WIDTH = "300";
 export const MIN_HEIGHT = "300";
-

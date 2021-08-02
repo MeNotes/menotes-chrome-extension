@@ -4,8 +4,8 @@ import {
   MAX_WIDTH,
   MAX_HEIGHT,
   MIN_HEIGHT,
-} from "../../shared/constants";
-import { UserSettings } from "../../shared/models";
+} from "../../../shared/constants";
+import { UserSettings } from "../../../shared/models";
 
 const CONTAINER_ID = "app";
 
