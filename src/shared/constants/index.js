@@ -7,6 +7,7 @@ export {
   MAX_HEIGHT,
   MAX_WIDTH,
   MIN_WIDTH,
+  USER_SETTINGS_KEY,
 } from "./settings";
 export { HIDDEN_CLASS_NAME } from "./style";
 export { NOTES_STORAGE_KEY, ACTIVE_NOTE_ID } from "./notes";
