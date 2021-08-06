@@ -1,6 +1,6 @@
 export interface UserSettings {
-  popupHeight: string;
-  popupWidth: string;
+  popupHeight: number;
+  popupWidth: number;
   showSidebar: boolean;
   googleSync: boolean;
 }

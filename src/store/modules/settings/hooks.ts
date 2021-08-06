@@ -2,13 +2,14 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useStoreon } from "storeon/react";
 import { NotesService } from "../../../apps/popup/services";
 import { USER_SETTINGS_KEY } from "../../../shared/constants";
-import { Note } from "../../../shared/models";
 import { StorageService } from "../../../shared/services";
 import { UserSettings } from "../../../shared/types";
 import {
+  defaultSettings,
   DISABLE_GOOGLE_SYNC,
   DISABLE_SIDEBAR,
   ENABLE_SIDEBAR,
+  GET_SETTINGS,
   SET_POPUP_HEIGHT,
   SET_POPUP_WIDTH,
   SET_SETTINGS,
@@ -16,24 +17,37 @@ import {
 import { SettingsEvents, SettingsState } from "./reducer";
 
 const storage = new StorageService();
-const notesService = new NotesService(storage);
 
 export function useSettingsQuery() {
-  const { dispatch, popupWidth, popupHeight, showSidebar, googleSync } =
-    useStoreon<SettingsState, SettingsEvents>(
-      "googleSync",
-      "showSidebar",
-      "popupWidth",
-      "popupHeight"
-    );
+  const {
+    dispatch,
+    popupWidth,
+    popupHeight,
+    showSidebar,
+    googleSync,
+    loading,
+  } = useStoreon<SettingsState, SettingsEvents>(
+    "googleSync",
+    "showSidebar",
+    "popupWidth",
+    "popupHeight",
+    "loading"
+  );
 
   useEffect(() => {
-    storage.get(USER_SETTINGS_KEY).then((settings: UserSettings) => {
-      dispatch(SET_SETTINGS, settings);
-    });
+    dispatch(GET_SETTINGS);
+    storage
+      .get(USER_SETTINGS_KEY)
+      .then((settings: UserSettings) => {
+        if (settings) {
+          return dispatch(SET_SETTINGS, settings);
+        }
+        dispatch(SET_SETTINGS, defaultSettings);
+      })
+      .catch(() => dispatch(SET_SETTINGS, defaultSettings));
   }, [dispatch]);
 
-  return { popupWidth, popupHeight, showSidebar, googleSync };
+  return { popupWidth, popupHeight, showSidebar, googleSync, loading };
 }
 
 export function useSettingsMutation() {
@@ -56,7 +70,7 @@ export function useSettingsMutation() {
   );
 
   const setPopupHeight = useCallback(
-    (height: string) => {
+    (height: number) => {
       storage
         .set(USER_SETTINGS_KEY, {
           ...settings,
@@ -70,7 +84,7 @@ export function useSettingsMutation() {
   );
 
   const setPopupWidth = useCallback(
-    (width: string) => {
+    (width: number) => {
       storage
         .set(USER_SETTINGS_KEY, {
           ...settings,

@@ -7,63 +7,7 @@
 </head>
 
 <body>
-  <main class="content">
-    <section class="settings">
-      <div class="settings-header">
-        <h2 class="settings-header_text">Settings</h2>
-        <button id="clear-storage-button" class="clear-storage">Clear storage</button>
-      </div>
-      <div class="settings-block settings-general">
-        <h3 class="settings-block_header">General</h3>
-        <div class="delimiter"></div>
-        <div class="setting-items">
-          <div class="setting-item">
-            <div class="left">
-              <h3 class="setting-item_title">Enable google calendar synchronization</h3>
-              <p class="setting-item_description">To be able to pre-fill note with agenda from the google calendar.</p>
-            </div>
-            <div class="right">
-              <button id="google-events-toogle" class="setting-item_toggle"></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="settings-block settings-view">
-        <h3 class="settings-block_header">View</h3>
-        <div class="delimiter"></div>
-        <div class="setting-items">
-          <div class="setting-item">
-            <div class="left">
-              <h3 class="setting-item_title">Width</h3>
-              <p class="setting-item_description">Setup width for note panel in the px. Min: 300, Max: 760 .</p>
-            </div>
-            <div class="right">
-              <div class="group">
-                <input id="width-input" type="text" required>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>px</label>
-              </div>
-            </div>
-          </div>
-          <div class="setting-item">
-            <div class="left">
-              <h3 class="setting-item_title">Height</h3>
-              <p class="setting-item_description">Setup height for note panel in the px. Min: 300, Max: 540.</p>
-            </div>
-            <div class="right">
-              <div class="group">
-                <input id="height-input" type="text" required>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>px</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+  <div id="root"></div>
 </body>
 
 </html>

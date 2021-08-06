@@ -1,5 +1,4 @@
 import { StoreonModule } from "storeon";
-import { Note } from "../../../shared/models";
 import {
   SET_POPUP_HEIGHT,
   SET_SETTINGS,
@@ -8,34 +7,43 @@ import {
   ENABLE_SIDEBAR,
   DISABLE_GOOGLE_SYNC,
   DISABLE_SIDEBAR,
+  GET_SETTINGS,
+  defaultSettings,
 } from "./constants";
 
 export interface SettingsState {
-  popupHeight: string;
-  popupWidth: string;
+  popupHeight: number;
+  popupWidth: number;
   showSidebar: boolean;
   googleSync: boolean;
+  loading: boolean;
 }
 
 export interface SettingsEvents {
-  [SET_SETTINGS]: SettingsState;
-  [SET_POPUP_WIDTH]: { popupWidth: string };
-  [SET_POPUP_HEIGHT]: { popupHeight: string };
+  [SET_SETTINGS]: {
+    popupHeight: number;
+    popupWidth: number;
+    showSidebar: boolean;
+    googleSync: boolean;
+  };
+  [SET_POPUP_WIDTH]: { popupWidth: number };
+  [SET_POPUP_HEIGHT]: { popupHeight: number };
 
   [ENABLE_GOOGLE_SYNC]: undefined;
   [DISABLE_GOOGLE_SYNC]: undefined;
   [ENABLE_SIDEBAR]: undefined;
   [DISABLE_SIDEBAR]: undefined;
+  [GET_SETTINGS]: undefined;
 }
 
 export const settingsModule: StoreonModule<SettingsState, SettingsEvents> = (
   store
 ) => {
-  store.on("@init", () => ({
-    popupHeight: "390px",
-    popupWidth: "600px",
-    showSidebar: true,
-    googleSync: true,
+  store.on("@init", () => defaultSettings);
+
+  store.on(GET_SETTINGS, (state) => ({
+    ...state,
+    loading: true,
   }));
 
   store.on(SET_SETTINGS, (state, payload) => ({
@@ -44,6 +52,7 @@ export const settingsModule: StoreonModule<SettingsState, SettingsEvents> = (
     popupWidth: payload.popupWidth,
     googleSync: payload.googleSync,
     showSidebar: payload.showSidebar,
+    loading: false,
   }));
 
   store.on(SET_POPUP_WIDTH, (state, payload) => ({
