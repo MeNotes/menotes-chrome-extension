@@ -1,17 +1,13 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useStoreon } from "storeon/react";
-import { NotesService } from "../../../apps/popup/services";
 import { USER_SETTINGS_KEY } from "../../../shared/constants";
 import { StorageService } from "../../../shared/services";
 import { UserSettings } from "../../../shared/types";
 import {
   defaultSettings,
-  DISABLE_GOOGLE_SYNC,
   DISABLE_SIDEBAR,
   ENABLE_SIDEBAR,
   GET_SETTINGS,
-  SET_POPUP_HEIGHT,
-  SET_POPUP_WIDTH,
   SET_SETTINGS,
 } from "./constants";
 import { SettingsEvents, SettingsState } from "./reducer";
@@ -69,32 +65,18 @@ export function useSettingsMutation() {
     [popupWidth, popupHeight, showSidebar, googleSync]
   );
 
-  const setPopupHeight = useCallback(
-    (height: number) => {
-      storage
-        .set(USER_SETTINGS_KEY, {
-          ...settings,
-          popupHeight: height,
-        })
-        .then(() => {
-          dispatch(SET_POPUP_HEIGHT, { popupHeight: height });
-        });
+  const setSettings = useCallback(
+    (settings: {
+      popupHeight: number;
+      popupWidth: number;
+      googleSync: boolean;
+    }) => {
+      const newSettings = { ...settings, showSidebar };
+      storage.set(USER_SETTINGS_KEY, newSettings).then(() => {
+        dispatch(SET_SETTINGS, newSettings);
+      });
     },
-    [dispatch, settings]
-  );
-
-  const setPopupWidth = useCallback(
-    (width: number) => {
-      storage
-        .set(USER_SETTINGS_KEY, {
-          ...settings,
-          popupWidth: width,
-        })
-        .then(() => {
-          dispatch(SET_POPUP_WIDTH, { popupWidth: width });
-        });
-    },
-    [dispatch]
+    [dispatch, showSidebar]
   );
 
   const disableSidebar = useCallback(() => {
@@ -119,34 +101,16 @@ export function useSettingsMutation() {
       });
   }, [dispatch]);
 
-  const enableGoogleSync = useCallback(() => {
-    storage
-      .set(USER_SETTINGS_KEY, {
-        ...settings,
-        googleSync: true,
-      })
-      .then(() => {
-        dispatch(ENABLE_SIDEBAR);
-      });
-  }, [dispatch]);
-
-  const disableGoogleSync = useCallback(() => {
-    storage
-      .set(USER_SETTINGS_KEY, {
-        ...settings,
-        googleSync: false,
-      })
-      .then(() => {
-        dispatch(DISABLE_GOOGLE_SYNC);
-      });
+  const clearSettings = useCallback(() => {
+    storage.clear().then(() => {
+      dispatch(SET_SETTINGS, defaultSettings);
+    });
   }, [dispatch]);
 
   return {
-    setPopupWidth,
-    disableGoogleSync,
-    enableGoogleSync,
     enableSidebar,
-    setPopupHeight,
+    setSettings,
     disableSidebar,
+    clearSettings,
   };
 }
