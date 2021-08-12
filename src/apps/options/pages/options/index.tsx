@@ -27,15 +27,20 @@ export const OptionsPage = () => {
   >("googleSync", "popupWidth", "popupHeight", "loading");
   const { setSettings, clearSettings } = useSettingsMutation();
 
-  const [localWidth, setLocalWidth] = useState<string>(popupWidth.toString());
+  const [localWidth, setLocalWidth] = useState<string>("");
   const [localGoogleSync, setLocalGoogleSync] = useState<boolean>(googleSync);
-  const [localHeight, setLocalHeight] = useState<string>(
-    popupHeight.toString()
-  );
+  const [localHeight, setLocalHeight] = useState<string>("");
+
+  useEffect(() => {
+    setLocalWidth(popupWidth.toString());
+    setLocalHeight(popupHeight.toString());
+    setLocalGoogleSync(googleSync);
+  }, [popupWidth, popupHeight, googleSync]);
 
   const onSave = useCallback(() => {
     const newHeight = isHeightValid(localHeight) ? localHeight : popupHeight;
     const newWidth = isWidthValid(localWidth) ? localWidth : popupWidth;
+
     setSettings({
       googleSync: localGoogleSync,
       popupHeight: +newHeight,
