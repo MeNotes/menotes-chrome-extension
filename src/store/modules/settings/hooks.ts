@@ -36,7 +36,8 @@ export function useSettingsQuery() {
       .get(USER_SETTINGS_KEY)
       .then((settings: UserSettings) => {
         if (settings) {
-          return dispatch(SET_SETTINGS, settings);
+          dispatch(SET_SETTINGS, settings);
+          return;
         }
         dispatch(SET_SETTINGS, defaultSettings);
       })
