@@ -1,0 +1,25 @@
+.editor-toolbar {
+  display: none;
+}
+
+.EasyMDEContainer .CodeMirror {
+  min-height: 100vh;
+}
+
+.CodeMirror {
+  background: unset;
+}
+
+.CodeMirror
+  .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+  background: unset;
+}
+
+.CodeMirror-scroll {
+  overflow: unset !important;
+}
+
+#simplemde-editor-2-wrapper {
+  max-height: 100%;
+  overflow: auto;
+}

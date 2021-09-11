@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
-import SimpleMDE from "react-simplemde-editor";
+import SimpleMDE, { SimpleMDEReactProps } from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+import "./overrides.css";
 
 import styles from "./styles.module.css";
 import {
@@ -38,11 +39,12 @@ export const Editor = () => {
   }, [notes, activeNoteId]);
 
   const editorOptions = useMemo(() => {
-    const options: any = {
+    const options: SimpleMDEReactProps["options"] = {
       autofocus: true,
       showIcons: ["code"],
       hideIcons: ["fullscreen", "side-by-side"],
       status: false,
+      minHeight: "100%",
     };
     return options;
   }, []);
@@ -81,14 +83,14 @@ export const Editor = () => {
         onClick={toggleToolbar}
       ></button> */}
 
-      <button
+      {/* <button
         id="copy-note-button"
         className="editor__toolbar-copy editor__toolbar-button"
         title="Copy to clipboard"
         onClick={copyEditorValueToClipboard}
       >
         <i className="fa fa-clipboard"></i>
-      </button>
+      </button> */}
     </section>
   );
 };
