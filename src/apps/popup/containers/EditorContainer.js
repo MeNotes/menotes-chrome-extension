@@ -1,5 +1,5 @@
-import { Editor } from "../components/Editor";
-import { CalendarEventList } from "../components/CalendarEventList";
+import { Editor } from "../components/ActiveNote/Editor";
+import { CalendarEventList } from "../components/ActiveNote/CalendarEventList";
 import { HIDDEN_CLASS_NAME } from "../../shared/constants";
 import { debounce } from "../../shared/utils";
 import { UPDATE_ACTIVE_NOTE_ACTION, UPDATE_NOTES_ACTION } from "../../store";

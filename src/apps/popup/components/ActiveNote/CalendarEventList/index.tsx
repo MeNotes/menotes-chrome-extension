@@ -1,9 +1,9 @@
 import React from "react";
-import { Note } from "../../../../shared/models";
+import { Note } from "../../../../../shared/models";
 import {
   useCalendarEventsQuery,
   useNotesMutation,
-} from "../../../../store/modules";
+} from "../../../../../store/modules";
 import styles from "./styles.module.css";
 
 export const CalendarEventList = () => {
@@ -13,6 +13,8 @@ export const CalendarEventList = () => {
   const onEventClick = (event: any) => {
     upsertActiveNote(new Note({ id: null, value: event.summary }));
   };
+
+  const isNotEmpty = data && data.length > 0;
 
   return (
     <section className={styles.container}>
@@ -30,17 +32,17 @@ export const CalendarEventList = () => {
       )}
 
       <div id="calendar-event-list" className={styles.calendar_event_list}>
-        {data &&
-          data.length &&
-          data.map((event: any) => (
-            <button
-              className={styles.list_item}
-              key={event.id}
-              onClick={() => onEventClick(event)}
-            >
-              ${event.summary}
-            </button>
-          ))}
+        {isNotEmpty
+          ? data.map((event: any) => (
+              <button
+                className={styles.list_item}
+                key={event.id}
+                onClick={() => onEventClick(event)}
+              >
+                ${event.summary}
+              </button>
+            ))
+          : null}
       </div>
     </section>
   );

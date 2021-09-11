@@ -7,12 +7,11 @@ import {
   EMPTY_NOTE,
   useNotesMutation,
   useNotesQuery,
-} from "../../../../store/modules";
+} from "../../../../../store/modules";
 
 export const Editor = () => {
   const { notes, activeNoteId } = useNotesQuery();
-  const { upsertNote, upsertActiveNote, setActiveNoteId, clearActiveNoteId } =
-    useNotesMutation();
+  const { upsertNote, setActiveNoteId, clearActiveNoteId } = useNotesMutation();
 
   const [activeNote, setActiveNote] = useState(EMPTY_NOTE);
 
@@ -52,10 +51,6 @@ export const Editor = () => {
     upsertNote({ id: activeNote.id, value });
   };
 
-  const clearEditorValue = () => {
-    upsertActiveNote(EMPTY_NOTE);
-  };
-
   const copyEditorValueToClipboard = () => {
     if (!navigator.clipboard) {
       console.error("Clipborad is not available");
@@ -73,22 +68,13 @@ export const Editor = () => {
 
   return (
     <section className={styles.container}>
-      <button
-        className="editor-page__create-button editor__toolbar-button"
-        title="Create new note"
-        onClick={clearEditorValue}
-      >
-        <i className="fa fa-edit"></i>
-      </button>
-
       <SimpleMDE
         value={activeNote.value}
         onChange={onChange}
         options={editorOptions}
       />
 
-      {/* 
-      <button
+      {/* <button
         id="toggle-toolbar-button"
         className="editor__toolbar-toggle fa editor__toolbar-button"
         title="Toggle toolbar"

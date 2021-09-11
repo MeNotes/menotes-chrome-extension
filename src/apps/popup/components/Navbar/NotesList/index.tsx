@@ -1,6 +1,6 @@
 import React from "react";
-import { Note } from "../../../../shared/models";
-import { useNotesQuery, useNotesMutation } from "../../../../store/modules";
+import { Note } from "../../../../../shared/models";
+import { useNotesQuery, useNotesMutation } from "../../../../../store/modules";
 import styles from "./styles.module.css";
 
 export const NotesList = () => {
@@ -17,8 +17,6 @@ export const NotesList = () => {
 
   return (
     <section className={styles.container}>
-      {Array.isArray(notes) && !notes.length && <div>No notes</div>}
-
       {Array.isArray(notes) &&
         notes.length > 0 &&
         notes.map((note: Note) => (
