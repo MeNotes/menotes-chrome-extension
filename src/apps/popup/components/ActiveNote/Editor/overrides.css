@@ -23,3 +23,7 @@
   max-height: 100%;
   overflow: auto;
 }
+
+.EasyMDEContainer .CodeMirror {
+  border-right: none;
+}
