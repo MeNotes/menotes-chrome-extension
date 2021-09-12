@@ -53,21 +53,6 @@ export const Editor = () => {
     upsertNote({ id: activeNote.id, value });
   };
 
-  const copyEditorValueToClipboard = () => {
-    if (!navigator.clipboard) {
-      console.error("Clipborad is not available");
-      return;
-    }
-    navigator.clipboard.writeText(activeNote.value).then(
-      function () {
-        console.log("Async: Copying to clipboard was successful!");
-      },
-      function (err) {
-        console.error("Async: Could not copy text: ", err);
-      }
-    );
-  };
-
   return (
     <section className={styles.container}>
       <SimpleMDE
@@ -82,15 +67,6 @@ export const Editor = () => {
         title="Toggle toolbar"
         onClick={toggleToolbar}
       ></button> */}
-
-      {/* <button
-        id="copy-note-button"
-        className="editor__toolbar-copy editor__toolbar-button"
-        title="Copy to clipboard"
-        onClick={copyEditorValueToClipboard}
-      >
-        <i className="fa fa-clipboard"></i>
-      </button> */}
     </section>
   );
 };

@@ -7,8 +7,12 @@
 }
 
 .button {
-  opacity: .5;
+  position: absolute;
+  opacity: 0.5;
   font-size: 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
   transition-property: background;
   transition: 0.3s;
 }
@@ -18,9 +22,9 @@
 }
 
 .remove {
-  position: absolute;
-  border: none;
-  background: none;
-  cursor: pointer;
   bottom: 20px;
+}
+
+.copy {
+  top: 20px;
 }

@@ -29,6 +29,8 @@
   word-break: break-all;
   overflow: hidden;
   border-right: none;
+  transition: 0.3s;
+  transition-property: background;
 }
 
 .note:last-child {
@@ -37,5 +39,8 @@
 
 .note.active {
   background: #a3abb366;
-  transition: 0.3s;
+}
+
+.note:hover {
+  background: #a2abb333;
 }
