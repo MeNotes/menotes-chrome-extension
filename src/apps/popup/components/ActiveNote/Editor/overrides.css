@@ -6,6 +6,10 @@
   min-height: 100vh;
 }
 
+.EasyMDEContainer {
+  font-size: 16px;
+}
+
 .CodeMirror {
   background: unset;
 }
@@ -17,6 +21,7 @@
 
 .CodeMirror-scroll {
   overflow: unset !important;
+  min-height: 90vh !important;
 }
 
 #simplemde-editor-2-wrapper {

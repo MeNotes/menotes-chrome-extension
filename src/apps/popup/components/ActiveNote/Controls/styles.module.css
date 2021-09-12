@@ -1,8 +1,26 @@
 .container {
-  position: absolute;
-  right: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 40px;
+  align-items: center;
+}
+
+.button {
+  opacity: .5;
+  font-size: 16px;
+  transition-property: background;
+  transition: 0.3s;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.remove {
+  position: absolute;
+  border: none;
+  background: none;
+  cursor: pointer;
+  bottom: 20px;
 }
