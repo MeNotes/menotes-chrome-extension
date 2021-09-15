@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-basis: 70%;
+  max-width: 70%;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 40px);
+}
+
+.right {
+  width: 40px;
+}

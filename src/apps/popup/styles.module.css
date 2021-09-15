@@ -1,0 +1,6 @@
+.container {
+  display: flex;
+  background: #fbfbfb;
+  flex-wrap: nowrap;
+  height: 100%;
+}

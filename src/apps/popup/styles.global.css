@@ -1,0 +1,15 @@
+:root {
+  --editor-height: 300px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.CodeMirror-scroll {
+  min-height: unset !important;
+} 
+
+body {
+  margin: 0;
+}
