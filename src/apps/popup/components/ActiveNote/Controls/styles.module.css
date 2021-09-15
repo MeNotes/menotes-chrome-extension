@@ -1,0 +1,30 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+
+.button {
+  position: absolute;
+  opacity: 0.5;
+  font-size: 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition-property: background;
+  transition: 0.3s;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.remove {
+  bottom: 20px;
+}
+
+.copy {
+  top: 20px;
+}

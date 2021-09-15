@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+}
+
+.container::-webkit-scrollbar {
+  width: 3px;
+}
+
+.container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.note {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  max-height: 70px;
+  min-height: 70px;
+  padding: 10px;
+  border-bottom: 1px solid #dedede;
+  word-break: break-all;
+  overflow: hidden;
+  border-right: none;
+  transition: 0.3s;
+  transition-property: background;
+}
+
+.note:last-child {
+  border-bottom: none;
+}
+
+.note.active {
+  background: #a3abb366;
+}
+
+.note:hover {
+  background: #a2abb333;
+}

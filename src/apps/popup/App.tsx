@@ -1,11 +1,10 @@
 import React from "react";
 import { useSettingsQuery } from "../../store/modules";
-import { CalendarEventList } from "./components/CalendarEventList";
-import { Editor } from "./components/Editor";
-import { NotesList } from "./components/NotesList";
 import { useSize } from "./hooks/useSize";
 import styles from "./styles.module.css";
-import "./styles.css";
+import "./styles.global.css";
+import { NavBar } from "./components/Navbar";
+import { ActiveNote } from "./components/ActiveNote";
 
 export const App = (): JSX.Element => {
   useSize(document.getElementById("root"));
@@ -13,9 +12,8 @@ export const App = (): JSX.Element => {
 
   return (
     <main className={styles.container}>
-      <CalendarEventList />
-      <Editor />
-      <NotesList />
+      <NavBar />
+      <ActiveNote />
     </main>
   );
 };

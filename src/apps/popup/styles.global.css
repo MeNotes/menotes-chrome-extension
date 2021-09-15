@@ -9,3 +9,7 @@
 .CodeMirror-scroll {
   min-height: unset !important;
 } 
+
+body {
+  margin: 0;
+}
