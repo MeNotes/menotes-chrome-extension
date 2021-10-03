@@ -31,7 +31,6 @@ const setSize = ({
 
 export const useSize = (containerRef: HTMLElement | null) => {
   const { popupWidth, popupHeight } = useStoreon<SettingsState, SettingsEvents>(
-    "googleSync",
     "popupWidth",
     "popupHeight",
     "loading"

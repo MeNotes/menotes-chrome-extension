@@ -3,9 +3,7 @@ import {
   SET_POPUP_HEIGHT,
   SET_SETTINGS,
   SET_POPUP_WIDTH,
-  ENABLE_GOOGLE_SYNC,
   ENABLE_SIDEBAR,
-  DISABLE_GOOGLE_SYNC,
   DISABLE_SIDEBAR,
   GET_SETTINGS,
   defaultSettings,
@@ -15,7 +13,6 @@ export interface SettingsState {
   popupHeight: number;
   popupWidth: number;
   showSidebar: boolean;
-  googleSync: boolean;
   loading: boolean;
 }
 
@@ -24,13 +21,10 @@ export interface SettingsEvents {
     popupHeight: number;
     popupWidth: number;
     showSidebar: boolean;
-    googleSync: boolean;
   };
   [SET_POPUP_WIDTH]: { popupWidth: number };
   [SET_POPUP_HEIGHT]: { popupHeight: number };
 
-  [ENABLE_GOOGLE_SYNC]: undefined;
-  [DISABLE_GOOGLE_SYNC]: undefined;
   [ENABLE_SIDEBAR]: undefined;
   [DISABLE_SIDEBAR]: undefined;
   [GET_SETTINGS]: undefined;
@@ -50,7 +44,6 @@ export const settingsModule: StoreonModule<SettingsState, SettingsEvents> = (
     ...state,
     popupHeight: payload.popupHeight,
     popupWidth: payload.popupWidth,
-    googleSync: payload.googleSync,
     showSidebar: payload.showSidebar,
     loading: false,
   }));
@@ -63,16 +56,6 @@ export const settingsModule: StoreonModule<SettingsState, SettingsEvents> = (
   store.on(SET_POPUP_HEIGHT, (state, payload) => ({
     ...state,
     popupHeight: payload.popupHeight,
-  }));
-
-  store.on(ENABLE_GOOGLE_SYNC, (state) => ({
-    ...state,
-    googleSync: true,
-  }));
-
-  store.on(DISABLE_GOOGLE_SYNC, (state) => ({
-    ...state,
-    googleSync: false,
   }));
 
   store.on(ENABLE_SIDEBAR, (state) => ({

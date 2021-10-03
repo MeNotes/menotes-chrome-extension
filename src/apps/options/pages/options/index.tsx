@@ -21,32 +21,30 @@ const isHeightValid = (height: string): boolean => {
 };
 
 export const OptionsPage = () => {
-  const { popupWidth, popupHeight, googleSync } = useStoreon<
-    SettingsState,
-    SettingsEvents
-  >("googleSync", "popupWidth", "popupHeight", "loading");
+  const { popupWidth, popupHeight } = useStoreon<SettingsState, SettingsEvents>(
+    "popupWidth",
+    "popupHeight",
+    "loading"
+  );
   const { setSettings, clearSettings } = useSettingsMutation();
 
   const [localWidth, setLocalWidth] = useState<string>("");
-  const [localGoogleSync, setLocalGoogleSync] = useState<boolean>(googleSync);
   const [localHeight, setLocalHeight] = useState<string>("");
 
   useEffect(() => {
     setLocalWidth(popupWidth.toString());
     setLocalHeight(popupHeight.toString());
-    setLocalGoogleSync(googleSync);
-  }, [popupWidth, popupHeight, googleSync]);
+  }, [popupWidth, popupHeight]);
 
   const onSave = useCallback(() => {
     const newHeight = isHeightValid(localHeight) ? localHeight : popupHeight;
     const newWidth = isWidthValid(localWidth) ? localWidth : popupWidth;
 
     setSettings({
-      googleSync: localGoogleSync,
       popupHeight: +newHeight,
       popupWidth: +newWidth,
     });
-  }, [localWidth, localHeight, localGoogleSync, popupWidth, popupHeight]);
+  }, [localWidth, localHeight, popupWidth, popupHeight]);
 
   return (
     <main className={styles.content}>
@@ -56,39 +54,6 @@ export const OptionsPage = () => {
           <button className={styles["clear-storage"]} onClick={clearSettings}>
             Clear storage
           </button>
-        </div>
-        <div
-          className={
-            styles["settings-block"] + " " + styles["settings-general"]
-          }
-        >
-          <h3 className={styles["settings-block_header"]}>General</h3>
-          <div className={styles.delimiter}></div>
-          <div className={styles["setting-item"]}>
-            <div className={styles["setting-item"]}>
-              <div className={styles.left}>
-                <h3 className={styles["setting-item_title"]}>
-                  Enable google calendar synchronization
-                </h3>
-                <p className={styles["setting-item_description"]}>
-                  To be able to pre-fill note with agenda from the google
-                  calendar.
-                </p>
-              </div>
-              <div className={styles.rigth}>
-                <button
-                  onClick={() => setLocalGoogleSync(!localGoogleSync)}
-                  className={
-                    styles["setting-item_toggle"] +
-                    " " +
-                    (localGoogleSync && styles.on) +
-                    " " +
-                    (!localGoogleSync && styles.off)
-                  }
-                ></button>
-              </div>
-            </div>
-          </div>
         </div>
         <div className={styles["settings-block settings-view"]}>
           <h3 className={styles["settings-block_header"]}>View</h3>
