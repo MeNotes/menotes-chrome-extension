@@ -1,5 +1,4 @@
 import React from "react";
-// import { CalendarEventList } from "./CalendarEventList";
 import { Controls } from "./Controls";
 import { Editor } from "./Editor";
 

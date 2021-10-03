@@ -12,14 +12,9 @@
   "icons": {
     "128": "icon-128.png"
   },
-  "oauth2": {
-    "client_id": "251071516492-3in35m9gu0enanhujhvorbrn7qhnu5lj.apps.googleusercontent.com",
-    "scopes": [
-      "https://www.googleapis.com/auth/calendar.readonly",
-      "https://www.googleapis.com/auth/calendar.events.readonly"
-    ]
-  },
-  "permissions": ["identity", "storage"],
+  "permissions": [
+    "storage"
+  ],
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://apis.google.com/; object-src 'self';"
+  "content_security_policy": "object-src 'self';"
 }

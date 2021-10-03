@@ -15,20 +15,13 @@ import { SettingsEvents, SettingsState } from "./reducer";
 const storage = new StorageService();
 
 export function useSettingsQuery() {
-  const {
-    dispatch,
-    popupWidth,
-    popupHeight,
-    showSidebar,
-    googleSync,
-    loading,
-  } = useStoreon<SettingsState, SettingsEvents>(
-    "googleSync",
-    "showSidebar",
-    "popupWidth",
-    "popupHeight",
-    "loading"
-  );
+  const { dispatch, popupWidth, popupHeight, showSidebar, loading } =
+    useStoreon<SettingsState, SettingsEvents>(
+      "showSidebar",
+      "popupWidth",
+      "popupHeight",
+      "loading"
+    );
 
   useEffect(() => {
     dispatch(GET_SETTINGS);
@@ -44,34 +37,26 @@ export function useSettingsQuery() {
       .catch(() => dispatch(SET_SETTINGS, defaultSettings));
   }, [dispatch]);
 
-  return { popupWidth, popupHeight, showSidebar, googleSync, loading };
+  return { popupWidth, popupHeight, showSidebar, loading };
 }
 
 export function useSettingsMutation() {
-  const { dispatch, popupWidth, popupHeight, showSidebar, googleSync } =
-    useStoreon<SettingsState, SettingsEvents>(
-      "googleSync",
-      "showSidebar",
-      "popupWidth",
-      "popupHeight"
-    );
+  const { dispatch, popupWidth, popupHeight, showSidebar } = useStoreon<
+    SettingsState,
+    SettingsEvents
+  >("showSidebar", "popupWidth", "popupHeight");
 
   const settings = useMemo(
     () => ({
       popupWidth,
       popupHeight,
       showSidebar,
-      googleSync,
     }),
-    [popupWidth, popupHeight, showSidebar, googleSync]
+    [popupWidth, popupHeight, showSidebar]
   );
 
   const setSettings = useCallback(
-    (settings: {
-      popupHeight: number;
-      popupWidth: number;
-      googleSync: boolean;
-    }) => {
+    (settings: { popupHeight: number; popupWidth: number }) => {
       const newSettings = { ...settings, showSidebar };
       storage.set(USER_SETTINGS_KEY, newSettings).then(() => {
         dispatch(SET_SETTINGS, newSettings);
